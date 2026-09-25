@@ -12,7 +12,7 @@ export function addRepositoryBuilding(repo,group,box,material,selectables,window
   let paneIndex=0;
   for(const [partIndex,p] of design.parts.entries()){
     const base=.72+p.y;
-    const body=box(group,p.x,base+p.h/2,p.z,p.w,p.h,p.d,facade);body.userData.repo=repo;selectables.push(body);
+    const body=box(group,p.x,base+p.h/2,p.z,p.w,p.h,p.d,facade,false,'plaster');body.userData.repo=repo;selectables.push(body);
     const floorStep=1.15;
     const floors=Math.max(1,Math.floor(p.h/floorStep));
     const step=p.h/floors;
@@ -56,9 +56,9 @@ export function addRepositoryBuilding(repo,group,box,material,selectables,window
     const roofs=planRoofs(design.parts,design.roof==='spire'?'spire':'hip');
     for(const roof of roofs){
       const {positions,indices}=roofMeshData(roof);
-      const indexed=new THREE.BufferGeometry();indexed.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));indexed.setIndex(indices);
+      const indexed=new THREE.BufferGeometry();indexed.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));indexed.setIndex(indices);indexed.setAttribute('uv',new THREE.Float32BufferAttribute(positions.flatMap((value,i)=>i%3===0?[value*.5,positions[i+2]*.5]:[]),2));
       const geometry=indexed.toNonIndexed();indexed.dispose();geometry.computeVertexNormals();
-      const mesh=new THREE.Mesh(geometry,material(roofColor));mesh.userData.repo=repo;group.add(mesh);selectables.push(mesh);
+      const mesh=new THREE.Mesh(geometry,material(roofColor,false,'slate'));mesh.userData.repo=repo;group.add(mesh);selectables.push(mesh);
       // Fascia follows the same exact footprint as the roof; nothing floats outside it.
       const width=roof.x1-roof.x0,depth=roof.z1-roof.z0,cx=(roof.x0+roof.x1)/2,cz=(roof.z0+roof.z1)/2;
       box(group,cx,roof.y-.025,cz,width,.065,depth,'#735a43');

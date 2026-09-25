@@ -36,3 +36,11 @@ test('repositories are scattered through a residential town and clear the castle
  const castle=town.restricted.find(r=>r.kind==='castle');assert.equal(castle.compound,true);
  for(const lot of [...town.buildings,...town.amenities,...town.restricted.filter(r=>r!==castle)])assert.ok(Math.abs(lot.x-castle.x)>castle.half+4||Math.abs(lot.z-castle.z)>castle.half+4);
 });
+
+test('the royal compound stays at the exact center as the town grows',()=>{
+ for(const count of [1,10,25,40,101]){
+  const town=createDistrict({repositories:Array.from({length:count},(_,i)=>repo(`r-${i}`,i+1))});
+  const castle=town.restricted.find(r=>r.kind==='castle');assert.equal(castle.x,0);assert.equal(castle.z,0);
+  for(const lot of [...town.buildings,...town.amenities,...town.restricted.filter(r=>r!==castle)])assert.ok(Math.abs(lot.x)>16||Math.abs(lot.z)>16);
+ }
+});

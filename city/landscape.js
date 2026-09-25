@@ -13,7 +13,7 @@ export function addLandscape(scene,map,material){
     const angle=i/24*Math.PI*2,mesh=new THREE.Mesh(new THREE.SphereGeometry(1,9,5),material(i%2?'#777a99':'#686682'));
     mesh.position.set(Math.sin(angle)*185,9+(i%5)*4,Math.cos(angle)*185);mesh.scale.set(25+i%3*12,12+i%5*6,26);mesh.rotation.y=i;hills.add(mesh);
   }
-  const cloudMaterial=new THREE.MeshToonMaterial({color:'#d9d2eb',transparent:true,opacity:.65});
+  const cloudMaterial=new THREE.MeshStandardMaterial({roughness:1,color:'#d9d2eb',transparent:true,opacity:.65});
   for(let i=0;i<12;i++)for(let puff=0;puff<3;puff++){
     const cloud=new THREE.Mesh(new THREE.SphereGeometry(1,9,6),cloudMaterial),angle=i/12*Math.PI*2;
     cloud.position.set(Math.sin(angle)*150+puff*7,39+i%3*9,Math.cos(angle)*150);cloud.scale.set(11,3.5+puff,6);hills.add(cloud);

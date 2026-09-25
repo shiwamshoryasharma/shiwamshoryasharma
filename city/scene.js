@@ -8,6 +8,7 @@ import { localLighting } from './daylight.js';
 import { createTownDragon } from './dragon.js';
 import { addGuards } from './guards.js';
 import { batchStaticBoxes } from './static-batching.js';
+import { createSurfaceMaps } from './surface-materials.js';
 import { addRepositoryBuilding } from './buildings.js';
 import * as THREE from 'three';
 import { OrbitControls } from './vendor/OrbitControls.js';
@@ -19,7 +20,7 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure=1.05;
+  renderer.toneMappingExposure=.98;
   host.append(renderer.domElement);
   const scene=new THREE.Scene();
   scene.background=new THREE.Color('#203335');
@@ -30,19 +31,23 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   controls.enableDamping=true;controls.dampingFactor=.08;controls.minDistance=8;controls.maxDistance=span*3;
   controls.maxPolarAngle=Math.PI*.47;controls.minPolarAngle=.12;controls.autoRotateSpeed=.38;
   controls.enablePan=true;controls.screenSpacePanning=true;
-  const hemi=new THREE.HemisphereLight('#d4dfc3','#646448',1.65);scene.add(hemi);
+  const hemi=new THREE.HemisphereLight('#d3deed','#494339',1.65);scene.add(hemi);
   const key=new THREE.DirectionalLight('#ffe0ac',2.1);key.position.set(-20,45,25);scene.add(key);
   const rim=new THREE.DirectionalLight('#a497ff',.9);rim.position.set(30,20,-30);scene.add(rim);
   const geometry=new THREE.BoxGeometry(1,1,1);
-  const toonRamp=new THREE.DataTexture(new Uint8Array([85,155,215,255]),4,1,THREE.RedFormat);toonRamp.minFilter=THREE.NearestFilter;toonRamp.magFilter=THREE.NearestFilter;toonRamp.needsUpdate=true;
+  const surfaces=createSurfaceMaps();
   const materials=new Map();
-  function material(color,glow=false){
-    const id=color+glow;
-    if(!materials.has(id)){const mat=glow ? new THREE.MeshBasicMaterial({color}) : new THREE.MeshToonMaterial({color,gradientMap:toonRamp});if(glow)mat.userData.lightColor=new THREE.Color(color);materials.set(id,mat);}
+  function material(color,glow=false,finish='plain'){
+    const id=color+glow+finish;
+    if(!materials.has(id)){
+      const surface=finish==='plain'?{}:surfaces.get(finish);
+      const mat=glow?new THREE.MeshBasicMaterial({color}):new THREE.MeshStandardMaterial({color,roughness:finish==='slate'?.72:.88,metalness:.04,...surface});
+      if(glow)mat.userData.lightColor=new THREE.Color(color);materials.set(id,mat);
+    }
     return materials.get(id);
   }
-  function box(parent,x,y,z,w,h,d,color,glow=false){
-    const mesh=new THREE.Mesh(geometry,material(color,glow));mesh.position.set(x,y,z);mesh.scale.set(w,h,d);parent.add(mesh);return mesh;
+  function box(parent,x,y,z,w,h,d,color,glow=false,finish='plain'){
+    const mesh=new THREE.Mesh(geometry,material(color,glow,finish));mesh.position.set(x,y,z);mesh.scale.set(w,h,d);parent.add(mesh);return mesh;
   }
   const world=new THREE.Group();scene.add(world);
   box(world,0,-.04,0,span,.08,span,'#58636b');
@@ -135,7 +140,7 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   let lighting=localLighting();
   function updateLighting(){
     lighting=localLighting();scene.background.set(lighting.sky);scene.fog.color.copy(scene.background);
-    hemi.intensity=lighting.ambient;key.intensity=lighting.sun;key.color.set(lighting.color);
+    hemi.intensity=lighting.ambient*.7;key.intensity=lighting.sun*1.2;key.color.set(lighting.color);
     key.position.set(Math.cos(lighting.hour/24*Math.PI*2)*45,35,25);
     for(const mat of materials.values())if(mat.userData.lightColor)mat.color.copy(mat.userData.lightColor).multiplyScalar(.4+lighting.lamps*.6);
     rim.intensity=.35;litWindowMaterial.color.setScalar(.38+lighting.lamps*.62);
@@ -256,7 +261,7 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
     dispose(){
       disposed=true;renderer.setAnimationLoop(null);observer.disconnect();visibilityObserver.disconnect();controls.dispose();host.removeEventListener('keydown',keyboard);document.removeEventListener('visibilitychange',visibilityChanged);reducedMotion.removeEventListener('change',motionChanged);
       renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('pointerleave',pointerLeave);renderer.domElement.removeEventListener('webglcontextlost',lost);
-      const geometries=new Set(),mats=new Set(),textures=new Set();scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material]){mats.add(m);if(m.map)textures.add(m.map);}}});toonRamp.dispose();geometries.forEach(g=>g.dispose());textures.forEach(t=>t.dispose());mats.forEach(m=>m.dispose());renderer.dispose();renderer.domElement.remove();
+      const geometries=new Set(),mats=new Set(),textures=new Set();scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material]){mats.add(m);if(m.map)textures.add(m.map);}}});surfaces.dispose();geometries.forEach(g=>g.dispose());textures.forEach(t=>t.dispose());mats.forEach(m=>m.dispose());renderer.dispose();renderer.domElement.remove();
     }
   };
 }

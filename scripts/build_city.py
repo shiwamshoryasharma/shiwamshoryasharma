@@ -24,7 +24,8 @@ def main():
     (DESTINATION / 'data').mkdir(exist_ok=True)
     shutil.copy2(ROOT / 'assets/github-data.json', DESTINATION / 'data/github-data.json')
     (DESTINATION / 'assets').mkdir(exist_ok=True)
-    shutil.copy2(ROOT / 'assets/anime-robotics-lab.png', DESTINATION / 'assets/anime-robotics-lab.png')
+    for name in ['anime-robotics-lab.png', 'profile.png']:
+        shutil.copy2(ROOT / 'assets' / name, DESTINATION / 'assets' / name)
     print(f'Staged public city at {DESTINATION} ({revision})')
 
 

@@ -1,15 +1,17 @@
 import { createDistrict, formatBytes } from './data.js';
+import { createDrivingUI } from './drive-ui.js';
 const $=id=>document.getElementById(id);
-let city,buildings=[];
-const cameraButtons=['zoom-in','zoom-out','reset','rotate','theme','fullscreen'];
+let city,drivingUI,selectedRepo,buildings=[];
+const cameraButtons=['zoom-in','zoom-out','reset','rotate','theme','fullscreen','drive-mode','drive-to-repo'];
 function unavailable(message){$('loading').hidden=true;$('fallback').hidden=false;$('fallback-message').textContent=message;cameraButtons.forEach(id=>$(id).disabled=true);}
 function element(tag,text,className){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;}
 function select(repo,focus=false){
+  selectedRepo=repo;
   city?.select(repo,focus);
   $('repo-number').textContent=String(repo.index).padStart(2,'0');$('repo-language').textContent=repo.language;$('repo-name').textContent=repo.name;
-  $('repo-caption').textContent='An address in the public repository district.';
+  $('repo-caption').textContent=repo.architecture.family+' · shaped by its language and source files.';
   $('repo-metrics').replaceChildren();
-  for(const [value,label] of [[formatBytes(repo.bytes),'DETECTED CODE'],[repo.languages.length,'LANGUAGES']]){
+  for(const [value,label] of [[formatBytes(repo.bytes),'DETECTED CODE'],[repo.languages.length,'LANGUAGES'],[repo.architecture.sourceFiles??'Unknown','SOURCE FILES']]){
     const metric=element('div',undefined,'metric');metric.append(element('strong',value),element('span',label));$('repo-metrics').append(metric);
   }
   $('language-bar').replaceChildren();$('language-details').replaceChildren();
@@ -34,6 +36,7 @@ function directory(){
   $('list-count').textContent=visible.length;$('no-results').hidden=visible.length>0;
 }
 $('search').addEventListener('input',directory);
+$('drive-to-repo').addEventListener('click',()=>drivingUI?.start(selectedRepo));
 $('retry').addEventListener('click',()=>location.reload());
 $('zoom-in').addEventListener('click',()=>city?.zoom(.83));$('zoom-out').addEventListener('click',()=>city?.zoom(1.2));
 $('reset').addEventListener('click',()=>city?.reset());
@@ -58,6 +61,7 @@ async function start(){
         const tip=$('tooltip');tip.hidden=!repo;if(!repo)return;tip.textContent=repo.name;
         tip.style.left=`${Math.max(8,Math.min(x+12,$('viewport').clientWidth-270))}px`;tip.style.top=`${Math.max(8,y-45)}px`;
       },unavailable);
+      drivingUI=createDrivingUI(city,repo=>select(repo));
       city.select(buildings[0]);$('rotate').setAttribute('aria-pressed',String(city.rotating));$('loading').hidden=true;
       if(!document.fullscreenEnabled)$('fullscreen').hidden=true;
     }catch(error){console.error('City rendering failed:',error);unavailable('3D could not start on this browser. Explore the directory below or open the illustrated skyline.');}

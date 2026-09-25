@@ -21,4 +21,6 @@ The characters belong to their respective creators and rights holders. This is u
 
 ## Interactive city runtime
 
-The 3D city is authored in `city/` with procedural geometry, window instancing, trees, miniature cars, roads, and rooftop details. It uses [Three.js r186](https://github.com/mrdoob/three.js/releases/tag/r186), whose MIT license is preserved in `city/vendor/THREE-LICENSE.txt`. All runtime files are served from the same site. The visual architecture is illustrative; only repository names, languages, and detected code sizes come from the public GitHub snapshot.
+The 3D city is authored in `city/` with procedural geometry, window instancing, trees, miniature cars, roads, and rooftop details. It uses [Three.js r186](https://github.com/mrdoob/three.js/releases/tag/r186), whose MIT license is preserved in `city/vendor/THREE-LICENSE.txt`. All runtime files are served from the same site. The visual architecture is illustrative; only repository names, languages, source-file counts, and detected code sizes come from the public GitHub snapshot.
+
+The driving expansion uses original procedural cockpit, parking, government-building, and castle geometry. Restricted landmarks are anonymous fictional scenery, not representations of identifiable private repositories. No additional art, model downloads, or runtime dependencies are used.

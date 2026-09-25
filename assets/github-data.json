@@ -13,7 +13,8 @@
         "Jupyter Notebook": "#DA5B0B",
         "Python": "#3572A5"
       },
-      "bytes": 3502771
+      "bytes": 3502771,
+      "source_files": 4
     },
     {
       "name": "ML_NLP_RestaurantReview_Python",
@@ -26,7 +27,8 @@
         "Jupyter Notebook": "#DA5B0B",
         "Python": "#3572A5"
       },
-      "bytes": 1277374
+      "bytes": 1277374,
+      "source_files": 7
     },
     {
       "name": "gallery",
@@ -41,7 +43,8 @@
         "CSS": "#663399",
         "JavaScript": "#f1e05a"
       },
-      "bytes": 1040625
+      "bytes": 1040625,
+      "source_files": 16
     },
     {
       "name": "AnishapeGeometry",
@@ -58,7 +61,8 @@
         "HTML": "#e34c26",
         "CSS": "#663399"
       },
-      "bytes": 658918
+      "bytes": 658918,
+      "source_files": 127
     },
     {
       "name": "URDF-BUILDER-2.0",
@@ -75,7 +79,8 @@
         "JavaScript": "#f1e05a",
         "HTML": "#e34c26"
       },
-      "bytes": 551829
+      "bytes": 551829,
+      "source_files": 65
     },
     {
       "name": "Ultimate-Markdown",
@@ -92,7 +97,8 @@
         "CSS": "#663399",
         "HTML": "#e34c26"
       },
-      "bytes": 546796
+      "bytes": 546796,
+      "source_files": 292
     },
     {
       "name": "DepthCloud",
@@ -109,7 +115,8 @@
         "Batchfile": "#C1F12E",
         "HTML": "#e34c26"
       },
-      "bytes": 374308
+      "bytes": 374308,
+      "source_files": 94
     },
     {
       "name": "Object-Depth-Analyzer",
@@ -128,7 +135,8 @@
         "HTML": "#e34c26",
         "Batchfile": "#C1F12E"
       },
-      "bytes": 236486
+      "bytes": 236486,
+      "source_files": 68
     },
     {
       "name": "Cloud-Enabled-Digital-Twin",
@@ -145,7 +153,8 @@
         "HTML": "#e34c26",
         "PLpgSQL": "#336790"
       },
-      "bytes": 31118
+      "bytes": 31118,
+      "source_files": 8
     },
     {
       "name": "WeatherAPP",
@@ -156,14 +165,16 @@
       "colors": {
         "Python": "#3572A5"
       },
-      "bytes": 16805
+      "bytes": 16805,
+      "source_files": 3
     },
     {
       "name": "Classification-and-Prediction-DS",
       "url": "https://github.com/shiwamshoryasharma/Classification-and-Prediction-DS",
       "languages": {},
       "colors": {},
-      "bytes": 0
+      "bytes": 0,
+      "source_files": 0
     }
   ],
   "days": [
@@ -1990,7 +2001,7 @@
     {
       "date": "2026-09-25",
       "level": 3,
-      "count": 7
+      "count": 8
     }
   ],
   "language_mix": [

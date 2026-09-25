@@ -6,7 +6,8 @@ on:
     paths:
       - 'city/**'
       - 'scripts/build_city.py'
-      - 'tests/city.test.mjs'
+      - 'tests/*.test.mjs'
+      - 'tests/*.py'
       - 'assets/github-data.json'
       - '.github/workflows/city-pages.yml'
   workflow_run:
@@ -34,7 +35,9 @@ jobs:
         with:
           ref: main
       - name: Test city data and layout
-        run: node --test tests/city.test.mjs
+        run: node --test tests/*.test.mjs
+      - name: Test public source counts
+        run: python3 -m unittest discover -s tests -p "test_*.py"
       - name: Stage the public city
         run: python3 scripts/build_city.py
       - name: Configure Pages

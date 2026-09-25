@@ -28,12 +28,30 @@ def gh_json(args):
     return value
 
 
+SOURCE_EXTENSIONS = {'.py', '.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs', '.html', '.css', '.scss', '.sass', '.vue', '.svelte', '.ipynb', '.c', '.h', '.cpp', '.hpp', '.cc', '.cs', '.java', '.kt', '.kts', '.go', '.rs', '.rb', '.php', '.swift', '.m', '.mm', '.lua', '.sh', '.bash', '.ps1', '.bat', '.cmd', '.r', '.jl', '.dart', '.cu', '.cuh', '.sql'}
+IGNORED_SOURCE_DIRS = {'node_modules', 'vendor', 'third_party', 'third-party', 'dist', 'build', '.git', '.venv', 'venv', '__pycache__', '.next', '.cache', 'coverage'}
+
+
+def count_source_files(tree):
+    """Count source-like files; do not publish paths or claim truncated totals."""
+    if tree.get('truncated'):
+        return None
+    count = 0
+    for entry in tree.get('tree', []):
+        path = Path(entry.get('path', ''))
+        if entry.get('type') != 'blob' or any(part.lower() in IGNORED_SOURCE_DIRS for part in path.parts[:-1]):
+            continue
+        if path.suffix.lower() in SOURCE_EXTENSIONS and not path.name.endswith(('.min.js', '.min.css')):
+            count += 1
+    return count
+
+
 def repositories():
     items, cursor = [], None
     while True:
         after = ', after:' + json.dumps(cursor) if cursor else ''
         query = '''query { user(login:"%s") { repositories(first:100, privacy:PUBLIC,
-            ownerAffiliations:OWNER, isFork:false%s) { nodes { name url
+            ownerAffiliations:OWNER, isFork:false%s) { nodes { name url defaultBranchRef { target { oid } }
             languages(first:100,orderBy:{field:SIZE,direction:DESC}) {
             totalCount edges { size node { name color } } } }
             pageInfo { hasNextPage endCursor } } } }''' % (USER, after)
@@ -47,9 +65,14 @@ def repositories():
                 colors = {e['node']['name']: e['node']['color'] for e in edges}
                 edges = [{'size': n, 'node': {'name': k, 'color': colors.get(k)}} for k, n in complete.items()]
             counts = {e['node']['name']: e['size'] for e in edges}
+            default_branch = repo.get('defaultBranchRef')
+            source_files = 0
+            if default_branch:
+                oid = default_branch['target']['oid']
+                source_files = count_source_files(gh_json([f'repos/{USER}/{repo["name"]}/git/trees/{oid}?recursive=1']))
             items.append({'name': repo['name'], 'url': repo['url'], 'languages': counts,
                           'colors': {e['node']['name']: e['node']['color'] for e in edges},
-                          'bytes': sum(counts.values())})
+                          'bytes': sum(counts.values()), 'source_files': source_files})
         if not response['pageInfo']['hasNextPage']:
             break
         cursor = response['pageInfo']['endCursor']

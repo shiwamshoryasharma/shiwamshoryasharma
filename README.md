@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/anime-robotics-lab.png" width="100%" alt="Original anime illustration of an adult engineer and a friendly robot in a quiet sci-fi workshop" />
+<img src="assets/anime-robotics-lab.png" width="100%" alt="Fan art of Vivy from Vivy: Fluorite Eye's Song and Alice from Sword Art Online at a sci-fi robotics workbench" />
 
 # Hi, I'm Shiwam.
 

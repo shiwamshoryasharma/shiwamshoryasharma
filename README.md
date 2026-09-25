@@ -91,10 +91,10 @@ Also exploring perception with [Object Depth Analyzer](https://github.com/shiwam
 
 <p align="center">
 <a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/"><strong>Explore the portfolio & fantasy realm ↗</strong></a><br />
-<sub>Guild halls · Walking fantasy residents · Drive & explore · Park and press F</sub>
+<sub>A 64-block town · Horse carts · Passing dragons · An isekai secret</sub>
 </p>
 
-The city grows with my public code repositories. Languages shape the architecture; source-file counts and code size shape its height. Click the skyline to explore it in 3D, or get behind the wheel and drive to a repository. Stop at its mint parking bay and press **F** to open it. Government and royal landmarks mark restricted scenery; private repository details stay private.
+The city grows with my public code repositories. Languages shape the architecture; source-file counts and code size shape its height. Click the skyline to explore in 3D, or take a horse cart through the town in first or third person. Stop at a wooden guild sign and press **F** to open a repository. Follow the roads beyond the walls, or discover where the teleport gate leads. Lighting follows your local clock. The guarded castle, mage tower and tavern are fictional; private repository details stay private.
 
 ## In the commit stream
 

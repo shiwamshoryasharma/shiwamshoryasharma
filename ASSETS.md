@@ -21,10 +21,14 @@ The characters belong to their respective creators and rights holders. This is u
 
 ## Interactive city runtime
 
-The 3D city is authored in `city/` with procedural geometry, window instancing, trees, miniature cars, roads, and rooftop details. It uses [Three.js r186](https://github.com/mrdoob/three.js/releases/tag/r186), whose MIT license is preserved in `city/vendor/THREE-LICENSE.txt`. All runtime files are served from the same site. The visual architecture is illustrative; only repository names, languages, source-file counts, and detected code sizes come from the public GitHub snapshot.
+The 3D city is authored in `city/` with procedural geometry, window instancing, trees, horse carts, roads, and rooftop details. It uses [Three.js r186](https://github.com/mrdoob/three.js/releases/tag/r186), whose MIT license is preserved in `city/vendor/THREE-LICENSE.txt`. All runtime files are served from the same site. The visual architecture is illustrative; only repository names, languages, source-file counts, and detected code sizes come from the public GitHub snapshot.
 
-The driving expansion uses original procedural cockpit, parking, government-building, and castle geometry. Restricted landmarks are anonymous fictional scenery, not representations of identifiable private repositories. No additional art, model downloads, or runtime dependencies are used.
+The driving expansion uses original procedural horse-cart, parking, mage-tower, tavern and castle geometry. Restricted landmarks are anonymous fictional scenery, not representations of identifiable private repositories. No additional art, model downloads, or runtime dependencies are used.
 
 ## Fantasy portfolio expansion
 
 The portfolio's project diagrams, CSS 3D identity artifact, fantasy buildings, stone lanes, trees, crystals, and six resident archetypes are original code-authored visuals. Residents use shared low-poly geometry and custom colors; no third-party anime character models are included. The existing Vivy/Alice banner is copied into the published site with the same fan-art attribution above. There are no new fonts, image services, model downloads, or runtime packages.
+
+## Living realm and isekai destination
+
+Horse anatomy, articulated legs, cart wheels, reins, town walls, armored entrance guards, the detailed royal compound, the teleport gate, cottage roofs, parks, trees, cel shading, clouds, floating islands, waterfalls and the flying dragon are original procedural Three.js geometry and animation. The hidden kingdom is an original scene inspired by the isekai genre, not footage or models from a particular anime. No Blender assets, downloaded character models, new image generation or additional runtime dependencies were used for this expansion.

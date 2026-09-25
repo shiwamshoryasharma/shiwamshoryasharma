@@ -1,11 +1,12 @@
 import * as THREE from 'three';
-import {residentRoutes,residentPose} from './residents.js';
+import {createResidentSimulation,stepResidents} from './residents.js';
 const NAMES={adventurer:'Rose · anime-inspired adventurer',elf:'Sylva · elven ranger',dwarf:'Bram · dwarven smith',beastfolk:'Fen · foxfolk traveler',human:'Mira · human cartographer',mage:'Orin · wandering mage'};
 export function addResidents(world,district,box,material){
   const sphere=new THREE.SphereGeometry(1,10,8),cone=new THREE.ConeGeometry(1,1,8),cylinder=new THREE.CylinderGeometry(1,1,1,8);
   function form(parent,geo,color,x,y,z,sx,sy,sz){const m=new THREE.Mesh(geo,material(color));m.position.set(x,y,z);m.scale.set(sx,sy,sz);parent.add(m);return m;}
-  const residents=residentRoutes(district.buildings).map((route,i)=>{
-    const group=new THREE.Group();world.add(group);
+  const simulation=createResidentSimulation(district);let lastTime=0;
+  const residents=simulation.residents.map((route,i)=>{
+    const group=new THREE.Group();group.userData.dynamic=true;world.add(group);
     const type=route.type,dwarf=type==='dwarf',beast=type==='beastfolk';
     const skin=beast?'#c69a6b':['#f0c9aa','#ad7f60','#dab494'][i%3];
     const cloth={adventurer:'#ae698b',elf:'#6c9676',dwarf:'#916343',beastfolk:'#a88b55',human:'#6d94af',mage:'#8770ad'}[type];
@@ -60,7 +61,13 @@ export function addResidents(world,district,box,material){
     group.scale.set(dwarf?1.18:1.17,dwarf?.9:1.2,dwarf?1.18:1.17);
     return {route,group,body,limbs,name:NAMES[type]};
   });
-  function update(time,moving=true){for(const resident of residents){const p=residentPose(resident.route,time);resident.group.position.set(p.x,.3,p.z);resident.group.rotation.y=p.yaw;resident.body.position.y=moving?Math.abs(p.stride)*.018:0;for(const {leg,arm,side} of resident.limbs){leg.rotation.x=moving?p.stride*.35*side:0;arm.rotation.x=moving?-p.stride*.27*side:0;}}}
+  function update(time,moving=true,cart=null){
+    if(moving)stepResidents(simulation,Math.max(0,time-lastTime),cart);lastTime=time;
+    for(const resident of residents){const p=resident.route;resident.group.position.set(p.x,.16,p.z);resident.group.rotation.y=p.yaw;
+      const walking=moving&&p.activity==='walking';resident.body.position.y=walking?Math.abs(p.stride)*.018:0;
+      for(const {leg,arm,side} of resident.limbs){leg.rotation.x=walking?p.stride*.35*side:0;arm.rotation.x=walking?-p.stride*.27*side:moving&&p.activity==='chatting'?Math.sin(time*2)*.12*side:0;}
+    }
+  }
   update(0,false);
   return {update,residents};
 }

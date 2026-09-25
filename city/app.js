@@ -1,8 +1,8 @@
 import { createDistrict, formatBytes } from './data.js';
 import { createDrivingUI } from './drive-ui.js';
 const $=id=>document.getElementById(id);
-let city,drivingUI,selectedRepo,buildings=[];
-const cameraButtons=['zoom-in','zoom-out','reset','rotate','theme','fullscreen','drive-mode','drive-to-repo','meet-locals','pause-residents'];
+let city,drivingUI,selectedRepo,buildings=[],kingdomScroll=0;
+const cameraButtons=['zoom-in','zoom-out','reset','rotate','find-portal','fullscreen','drive-mode','drive-to-repo','meet-locals','pause-residents'];
 function unavailable(message){$('loading').hidden=true;$('fallback').hidden=false;$('fallback-message').textContent=message;cameraButtons.forEach(id=>$(id).disabled=true);}
 function element(tag,text,className){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;}
 function select(repo,focus=false){
@@ -45,7 +45,12 @@ $('zoom-in').addEventListener('click',()=>city?.zoom(.83));$('zoom-out').addEven
 $('reset').addEventListener('click',()=>city?.reset());
 $('rotate').addEventListener('click',()=>{$('rotate').setAttribute('aria-pressed',String(city?.toggleRotation()||false));});
 $('viewport').addEventListener('orbitstopped',()=>{$('rotate').setAttribute('aria-pressed','false');});
-$('theme').addEventListener('click',()=>{$('theme').setAttribute('aria-pressed',String(city?.toggleDaylight()||false));});
+$('find-portal').addEventListener('click',()=>{city?.findPortal();$('portal-note').hidden=false;});
+$('enter-portal').addEventListener('click',()=>city?.enterKingdom());
+$('leave-kingdom').addEventListener('click',()=>city?.leaveKingdom());
+$('viewport').addEventListener('worldclock',event=>{for(const id of ['world-time','drive-time'])$(id).textContent=`${event.detail.phase} · ${event.detail.time}`;});
+$('viewport').addEventListener('kingdomchange',event=>{if(event.detail)kingdomScroll=window.scrollY;$('kingdom-overlay').hidden=!event.detail;$('portal-note').hidden=true;document.body.classList.toggle('kingdom-mode',event.detail);if(event.detail){document.querySelector('.city-panel').scrollIntoView({block:'start',behavior:'instant'});$('leave-kingdom').focus({preventScroll:true});}else{window.scrollTo({top:kingdomScroll,behavior:'instant'});$('viewport').focus({preventScroll:true});}});
+document.addEventListener('keydown',event=>{if(event.code==='Escape'&&city?.inKingdom){event.preventDefault();event.stopImmediatePropagation();city.leaveKingdom();}});
 $('fullscreen').addEventListener('click',async()=>{
   try{if(document.fullscreenElement)await document.exitFullscreen();else await document.querySelector('.city-panel').requestFullscreen();}
   catch{$('fullscreen').title='Fullscreen is unavailable in this browser';}
@@ -56,7 +61,7 @@ async function start(){
     const response=await fetch('./data/github-data.json',{cache:'no-cache'});if(!response.ok)throw new Error('Snapshot could not be loaded.');
     const data=await response.json();const district=createDistrict(data);buildings=district.buildings;
     if(!buildings.length)throw new Error('No code repositories are present in this snapshot.');
-    $('updated').textContent=`Updated ${data.updated}`;$('city-count').textContent=`${buildings.length} buildings · all districts`;
+    $('updated').textContent=`Updated ${data.updated}`;$('city-count').textContent=`${buildings.length} guilds · ${district.columns*district.rows} town blocks`;
     $('total-code').textContent=`${formatBytes(district.totalBytes)} across ${buildings.length} repositories.`;directory();select(buildings[0]);
     const loadWorld=async()=>{try{
       const {createCity}=await import('./scene.js');
@@ -65,7 +70,7 @@ async function start(){
         tip.style.left=`${Math.max(8,Math.min(x+12,$('viewport').clientWidth-270))}px`;tip.style.top=`${Math.max(8,y-45)}px`;
       },unavailable);
       drivingUI=createDrivingUI(city,repo=>select(repo));
-      $('meet-locals').disabled=false;$('pause-residents').disabled=false;
+      $('find-portal').disabled=false;$('meet-locals').disabled=false;$('pause-residents').disabled=false;
       $('pause-residents').textContent=city.residentsMoving?'Pause residents':'Let residents walk';$('pause-residents').setAttribute('aria-pressed',String(!city.residentsMoving));
       city.select(selectedRepo||buildings[0]);$('rotate').setAttribute('aria-pressed',String(city.rotating));$('loading').hidden=true;
       if(!document.fullscreenEnabled)$('fullscreen').hidden=true;

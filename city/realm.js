@@ -9,21 +9,24 @@ export function addRealmScenery(world,district,box,material){
   for(let x=-span/2+.65;x<span/2-.5;x+=.94)for(let z=-span/2+.65;z<span/2-.5;z+=.73){
     const roadX=vertical.some(lane=>Math.abs(x-lane)<district.roadWidth/2-.12);
     const roadZ=horizontal.some(lane=>Math.abs(z-lane)<district.roadWidth/2-.12);
-    if(roadX||roadZ)stones.push({x,z});
+    if((roadX||roadZ)&&!district.restricted.some(lot=>lot.compound&&Math.abs(x-lot.x)<lot.half+.4&&Math.abs(z-lot.z)<lot.half+.4))stones.push({x,z});
   }
-  const cobbles=new THREE.InstancedMesh(new THREE.BoxGeometry(.86,.025,.64),material('#8a8872'),stones.length),transform=new THREE.Object3D();
-  stones.forEach((p,i)=>{transform.position.set(p.x,.072,p.z);transform.rotation.y=(i%3-1)*.035;transform.updateMatrix();cobbles.setMatrixAt(i,transform.matrix);cobbles.setColorAt(i,new THREE.Color(['#d0c6ad','#b6b89f','#a9afa0','#c3b6a1'][i%4]));});cobbles.instanceMatrix.needsUpdate=true;world.add(cobbles);
-  const crown=new THREE.ConeGeometry(1,1,7),rock=new THREE.DodecahedronGeometry(1,0),crystal=new THREE.OctahedronGeometry(1,0);
-  for(let i=0;i<20;i++){
-    const angle=i/20*Math.PI*2,radius=span*.57;
-    const x=Math.cos(angle)*radius,z=Math.sin(angle)*radius;
-    // Floating perimeter rocks keep all scenery outside the drivable island.
-    const boulder=new THREE.Mesh(rock,material(i%3?'#687063':'#7b7489'));boulder.position.set(x,-.9-(i%3)*.3,z);boulder.scale.set(1.2+i%2,1.7,1.1);world.add(boulder);
-    box(world,x,.45,z,.17,2,.17,'#736043');
-    for(let tier=0;tier<3;tier++){
-      const tree=new THREE.Mesh(crown,material(i%4?'#547765':'#a58fba'));tree.position.set(x,1.5+tier*.8,z);tree.scale.set(1.1-tier*.23,1.8,1.1-tier*.23);world.add(tree);
+  const cobbles=new THREE.InstancedMesh(new THREE.BoxGeometry(.86,.025,.64),material('#a6a1b6'),stones.length),transform=new THREE.Object3D();
+  stones.forEach((p,i)=>{transform.position.set(p.x,.072,p.z);transform.rotation.y=(i%3-1)*.035;transform.updateMatrix();cobbles.setMatrixAt(i,transform.matrix);cobbles.setColorAt(i,new THREE.Color(['#8c8396','#a9a0ac','#8c929f','#b2a5aa'][i%4]));});cobbles.instanceMatrix.needsUpdate=true;world.add(cobbles);
+  // Raised footpaths follow the same intersections used by the residents.
+  for(const lot of [...district.buildings,...district.restricted,...district.amenities]){
+    if(lot.compound)continue;
+    for(const side of [-1,1]){
+      box(world,lot.x+side*4.5,.12,lot.z,.95,.24,9.9,'#a5a0b3');
+      box(world,lot.x,.12,lot.z+side*4.5,9.9,.24,.95,'#a5a0b3');
     }
-    if(i%3===0){const gem=new THREE.Mesh(crystal,material('#92bfc0'));gem.position.set(x+1,-.25,z);gem.scale.set(.35,1.05,.35);gem.rotation.z=.25;world.add(gem);}
+  }
+  for(const x of vertical)for(const z of horizontal){
+    if(district.restricted.some(lot=>lot.compound&&Math.abs(x-lot.x)<lot.half+5&&Math.abs(z-lot.z)<lot.half+5))continue;
+    for(const side of [-1,1])for(let i=-2;i<=2;i++){
+      box(world,x+i*.9,.09,z+side*4.5,.55,.03,1,'#a49aa8');
+      box(world,x+side*4.5,.09,z+i*.9,1,.03,.55,'#a49aa8');
+    }
   }
   // Wildflowers occupy the garden edges, away from residents' footpaths.
   const flowerGeometry=new THREE.IcosahedronGeometry(.055,0);

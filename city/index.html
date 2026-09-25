@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b101d"><meta name="description" content="Explore Shiwam's repositories as an interactive 3D city. Orbit, zoom, and discover the projects behind each tower.">
+<title>Repository District — Shiwam</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="https://github.com/shiwamshoryasharma"><span class="brand-icon">S<span>・</span></span><span>SHIWAM<span class="brand-sub">EXPERIMENTS IN CODE</span></span></a><a class="profile-link" href="https://github.com/shiwamshoryasharma">GitHub profile <span aria-hidden="true">↗</span></a></header>
+<main>
+<section class="intro"><div><p class="eyebrow"><span class="dot"></span> THE REPOSITORY DISTRICT / 01</p><h1>A little code. <span>A whole city.</span></h1><p class="lede">Every tower is a project. Take the scenic route.</p></div><div class="snapshot"><span>PUBLIC GITHUB SNAPSHOT</span><strong id="updated">Loading district…</strong><span>Refreshed daily · built from real code</span></div></section>
+<div class="workspace">
+<section class="city-panel" aria-label="Interactive repository city">
+<div class="scene-meta"><span class="chip"><span class="dot"></span> EXPLORER</span><span id="city-count" class="chip muted">Preparing buildings</span></div>
+<div id="viewport" tabindex="0" role="region" aria-label="3D city. Drag to rotate, scroll to zoom, right-drag to pan. Arrow keys rotate; Shift and arrow keys pan; plus and minus zoom; Home resets."></div>
+<div id="loading" class="loading" role="status">Building your view of the district…</div>
+<div id="fallback" class="fallback" hidden><h2>The district is still here.</h2><p id="fallback-message">3D could not start on this browser. Explore the repository list or open the illustrated skyline.</p><a href="https://github.com/shiwamshoryasharma/shiwamshoryasharma/blob/main/assets/repo-city.svg">View the illustrated skyline ↗</a><button id="retry">Try again</button></div>
+<div id="tooltip" class="tooltip" hidden></div>
+<div class="scene-footer"><div class="navigation-bar" role="group" aria-label="Camera controls"><button id="zoom-in" aria-label="Zoom in" title="Zoom in">＋</button><button id="zoom-out" aria-label="Zoom out" title="Zoom out">−</button><span class="separator"></span><button id="reset" title="Reset view (Home)">↺ <span>Reset</span></button><button id="rotate" aria-pressed="false" title="Toggle automatic rotation">◎ <span>Orbit</span></button><button id="theme" aria-pressed="false" title="Switch between night and daylight">☀ <span>Daylight</span></button><button id="fullscreen" title="Expand city" aria-label="Enter fullscreen">⛶</button></div><p class="gestures"><span>Drag to orbit</span><span>Scroll to zoom</span><span>Right-drag to pan</span><span>Tap a tower to explore</span></p></div>
+</section>
+<aside class="sidebar" aria-label="Repository details">
+<section class="inspector"><p class="eyebrow">AT THIS ADDRESS</p><div class="repo-heading"><span id="repo-number">01</span><span class="tag" id="repo-language">Repository</span></div><h2 id="repo-name">Pick a tower.</h2><p id="repo-caption">Click any building or select a project below.</p><div id="repo-metrics" class="metrics"></div><div id="language-bar" class="language-bar" aria-hidden="true"></div><ul id="language-details" class="language-details"></ul><a id="repo-link" class="repo-link" hidden>Explore repository <span aria-hidden="true">↗</span></a></section>
+<section class="directory"><div class="directory-heading"><h2>District directory</h2><span id="list-count">—</span></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a repository…" aria-label="Find a repository" autocomplete="off"></label><div id="repo-list" class="repo-list"></div><p id="no-results" hidden>No matching repositories.</p></section>
+</aside>
+</div>
+<section class="about-strip"><div><span class="small-icon">▥</span><p><strong>Code becomes architecture.</strong><br>Height follows code size on a logarithmic scale. Color follows the main language.</p></div><p>Public originals with detected code.<br>Forks, profile and resume repos excluded.<br><span id="total-code"></span></p></section>
+<footer><span>Made of curiosity, coffee, and a few thousand lines.</span><a href="https://github.com/shiwamshoryasharma/shiwamshoryasharma">View source ↗</a></footer>
+</main>
+<noscript><p class="no-script">Enable JavaScript to explore the 3D city, or <a href="https://github.com/shiwamshoryasharma">visit the GitHub profile</a>.</p></noscript>
+<script type="module" src="app.js"></script>
+</body></html>

@@ -18,3 +18,7 @@ The characters belong to their respective creators and rights holders. This is u
 - ORCID and repository badges: [Shields.io](https://shields.io/).
 - View counter: [Anton Komarev's GitHub Profile Views Counter](https://github.com/antonkomarev/github-profile-views-counter).
 - Linked project names and technology names identify their respective projects; they do not imply endorsement.
+
+## Interactive city runtime
+
+The 3D city is authored in `city/` with procedural geometry, window instancing, trees, miniature cars, roads, and rooftop details. It uses [Three.js r186](https://github.com/mrdoob/three.js/releases/tag/r186), whose MIT license is preserved in `city/vendor/THREE-LICENSE.txt`. All runtime files are served from the same site. The visual architecture is illustrative; only repository names, languages, and detected code sizes come from the public GitHub snapshot.

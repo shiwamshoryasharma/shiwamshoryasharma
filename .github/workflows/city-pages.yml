@@ -1,0 +1,48 @@
+name: Deploy repository city
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'city/**'
+      - 'scripts/build_city.py'
+      - 'tests/city.test.mjs'
+      - 'assets/github-data.json'
+      - '.github/workflows/city-pages.yml'
+  workflow_run:
+    workflows: ['Refresh profile cards']
+    types: [completed]
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the latest public profile
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+      - name: Test city data and layout
+        run: node --test tests/city.test.mjs
+      - name: Stage the public city
+        run: python3 scripts/build_city.py
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Upload city
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: .preview/site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

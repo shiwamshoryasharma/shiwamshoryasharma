@@ -49,3 +49,26 @@ Edit prose and project links in `README.md`, skill cards in `scripts/build_visua
 - [GitHub markup sanitization](https://github.com/github/markup#github-markup)
 - [GitHub scheduled workflow behavior](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)
 - [GitHub profile views counter](https://github.com/antonkomarev/github-profile-views-counter)
+## Interactive 3D city
+
+[Open the Repository District](https://shiwamshoryasharma.github.io/shiwamshoryasharma/).
+
+The README links to a separate GitHub Pages application because README rendering does not execute JavaScript. The site uses a locally vendored Three.js 0.186.0 runtime; no CDN or third-party API is needed by visitors. The original MIT license is included in `city/vendor/THREE-LICENSE.txt`. The engine and controls are unmodified release files.
+
+- Drag to rotate, scroll to zoom, and right-drag to pan. On touch screens, use one finger to orbit and two fingers to zoom/pan.
+- Select a tower or directory entry to inspect detected code bytes, language shares, and its repository link.
+- Use the toolbar for zoom, reset, automatic orbit, daylight, and fullscreen. Focus the viewport to use arrow keys for rotation, Shift + arrows for pan, +/− for zoom, and Home to reset.
+- Automatic orbit respects reduced-motion preferences. Drawing pauses in hidden tabs, pixel density is capped, and window geometry is instanced. Without a working 3D context, the repository directory and static skyline link remain available.
+- Unlike the compact README skyline, the interactive grid includes all eligible repositories with detected code, expanding its rows and columns as the snapshot grows. Heights continue to describe code bytes, not commit counts.
+
+The **Deploy repository city** workflow publishes changes to city files and redeploys after a successful **Refresh profile cards** run. The `workflow_run` trigger is deliberate: commits made by the default Actions token do not normally start another push workflow. Deployment stages only the `city/` directory and the public snapshot; local files, profile artwork, and unrelated assets are not published as site files.
+
+To test and preview locally from the repository root:
+
+```powershell
+node --test tests/city.test.mjs
+python scripts/build_city.py
+python -m http.server 8787 --bind 127.0.0.1 --directory .preview/site
+```
+
+Open `http://127.0.0.1:8787`. GitHub Pages must use **GitHub Actions** as its publishing source. The deployment uses only the repository's built-in token with Pages write permission and an OIDC token, with official actions pinned to commit SHAs.

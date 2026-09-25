@@ -83,7 +83,16 @@ Also exploring perception with [Object Depth Analyzer](https://github.com/shiwam
 
 ## The repository district
 
+<a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/">
 <img src="assets/repo-city.svg" width="100%" alt="Isometric 3D skyline of my largest public repositories; each numbered building represents a repository, with height based on code bytes" />
+</a>
+
+<p align="center">
+<a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/"><strong>Enter the interactive 3D district ↗</strong></a><br />
+<sub>Rotate · Zoom · Pan · Select a tower · Switch to daylight</sub>
+</p>
+
+The city grows with my public code repositories. Click the skyline to explore it in 3D.
 
 ## In the commit stream
 

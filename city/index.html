@@ -2,15 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b101d"><meta name="description" content="Explore Shiwam's repositories as an interactive 3D city. Orbit, zoom, and discover the projects behind each tower.">
-<title>Repository District — Shiwam</title>
-<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css">
+<meta name="theme-color" content="#0a0e18">
+<meta name="description" content="Shiwam builds across robotics, AI, and full-stack software. Explore reconstruction tools, robot workbenches, CAD experiments, and an interactive fantasy repository realm.">
+<title>Shiwam — Robotics, AI &amp; Full-stack Engineering</title>
+<link rel="canonical" href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/">
+<meta property="og:type" content="website"><meta property="og:title" content="Shiwam — Ideas into working worlds.">
+<meta property="og:description" content="Robotics, AI, and full-stack engineering. Selected projects and a living fantasy realm you can drive through.">
+<meta property="og:url" content="https://shiwamshoryasharma.github.io/shiwamshoryasharma/">
+<meta property="og:image" content="https://shiwamshoryasharma.github.io/shiwamshoryasharma/assets/anime-robotics-lab.png">
+<meta property="og:image:alt" content="Vivy and Alice fan art in a sci-fi robotics lab">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="portfolio.css">
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 </head>
 <body>
-<header class="topbar"><a class="brand" href="https://github.com/shiwamshoryasharma"><span class="brand-icon">S<span>・</span></span><span>SHIWAM<span class="brand-sub">EXPERIMENTS IN CODE</span></span></a><a class="profile-link" href="https://github.com/shiwamshoryasharma">GitHub profile <span aria-hidden="true">↗</span></a></header>
-<main>
-<section class="intro"><div><p class="eyebrow"><span class="dot"></span> THE REPOSITORY DISTRICT / 01</p><h1>A little code. <span>A whole city.</span></h1><p class="lede">Every tower is a project. Take the scenic route.</p></div><div class="snapshot"><span>PUBLIC GITHUB SNAPSHOT</span><strong id="updated">Loading district…</strong><span>Refreshed daily · built from real code</span></div></section>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar portfolio-header">
+  <a class="brand" href="#home" aria-label="Shiwam, home"><span class="brand-icon">S<span>・</span></span><span>SHIWAM<span class="brand-sub">CODE, CURIOSITY &amp; MAGIC</span></span></a>
+  <nav aria-label="Main navigation"><a href="#work">Work</a><a href="#district">3D world</a><a href="#about">About</a></nav>
+  <a class="header-link" href="https://github.com/shiwamshoryasharma">GitHub <span aria-hidden="true">↗</span></a>
+</header>
+<main id="main">
+<section id="home" class="portfolio-hero portfolio-section" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="dot"></span> ROBOTICS · AI · FULL-STACK</p>
+    <p class="hello">Hey, I'm Shiwam <span aria-hidden="true">✳</span></p>
+    <h1 id="hero-title">Ideas into<br><span>working worlds.</span></h1>
+    <p class="hero-description">I build software that helps machines see, robots move, and people create. From the first line of code to the world on the other side of the screen.</p>
+    <div class="hero-actions"><a class="pill-button primary" href="#work">Explore my work <span aria-hidden="true">↗</span></a><a class="pill-button secondary" href="#district">Enter the fantasy realm <span aria-hidden="true">◈</span></a></div>
+    <div class="hero-footnote"><span class="small-cross" aria-hidden="true">+</span><p>Somewhere between a robot lab<br>and a browser with too many tabs.</p></div>
+  </div>
+  <div class="identity-panel">
+    <div class="identity-top"><span>THE ARTIFICER’S STUDY</span><span class="identity-code">S / 01</span></div>
+    <div class="identity-art" aria-hidden="true">
+      <div class="orbit-line orbit-one"></div><div class="orbit-line orbit-two"></div>
+      <div class="cube-shadow"></div>
+      <div class="cube-stage"><div id="identity-cube" class="identity-cube">
+        <div class="cube-face face-front"><span class="cube-kicker">SHIWAM</span><b>S<span>•</span></b><span class="cube-caption">BUILD / LEARN / REPEAT</span></div>
+        <div class="cube-face face-back"><span class="cube-kicker">INTELLIGENCE</span><b>AI</b><span class="cube-caption">SEE / UNDERSTAND</span></div>
+        <div class="cube-face face-right"><span class="cube-kicker">ROBOTICS</span><b>R<span>₂</span></b><span class="cube-caption">SIMULATE / MOVE</span></div>
+        <div class="cube-face face-left"><span class="cube-kicker">SOFTWARE</span><b>&lt;/&gt;</b><span class="cube-caption">CONNECT / CREATE</span></div>
+        <div class="cube-face face-top"><span>◈</span></div><div class="cube-face face-bottom"></div>
+      </div></div>
+      <div class="orbit-label label-robot"><i>◎</i><span>Physical AI<small>PERCEPTION → ACTION</small></span></div>
+      <div class="orbit-label label-code"><i>&lt;/&gt;</i><span>Full-stack<small>IDEA → INTERFACE</small></span></div>
+      <span class="spark spark-one">+</span><span class="spark spark-two">+</span><span class="spark spark-three">✳</span>
+    </div>
+    <div class="identity-bottom"><span>ALWAYS IN EXPLORATION MODE</span><button id="turn-cube" aria-label="Rotate the 3D profile sculpture" hidden>Turn the cube <span aria-hidden="true">↻</span></button></div>
+  </div>
+</section>
+<div class="discipline-strip portfolio-section" aria-label="Engineering focus"><span>Perception</span><i>✳</i><span>Simulation</span><i>✳</i><span>3D workspaces</span><i>✳</i><span>Useful software</span></div>
+<section id="work" class="portfolio-section section-space" aria-labelledby="work-title">
+  <div class="section-heading"><div><p class="eyebrow">01 / SELECTED WORK</p><h2 id="work-title">Built out of curiosity.<br><span>Made to do something.</span></h2></div><a class="text-link" href="https://github.com/shiwamshoryasharma?tab=repositories">All repositories <span aria-hidden="true">↗</span></a></div>
+  <div class="project-grid">
+<article class="project-card project-depth"><div class="project-visual" aria-hidden="true"><span class="visual-label">RECONSTRUCTION STUDIO</span><svg viewBox="0 0 540 230" fill="none"><path d="M65 181 268 215 474 171M90 143 269 179 450 135M128 102 270 137 410 101M180 59 271 85 360 61M169 203 272 45 375 198M90 185 270 39 452 177" stroke="currentColor" opacity=".2"/><ellipse cx="275" cy="143" rx="81" ry="32" stroke="currentColor" stroke-dasharray="2 8"/><ellipse cx="275" cy="120" rx="73" ry="28" stroke="currentColor" stroke-dasharray="2 7"/><ellipse cx="275" cy="97" rx="58" ry="24" stroke="currentColor" stroke-dasharray="2 6"/><ellipse cx="275" cy="76" rx="34" ry="18" stroke="currentColor" stroke-dasharray="2 5"/><path d="m210 142 15-30-7-12 35-29 22-12 30 17 29 42 14 25-70 29Z" stroke="currentColor" stroke-dasharray="1 9" stroke-width="5"/><path d="M105 80V59h22m294 0h22v21M105 157v21h22m294 0h22v-21" stroke="currentColor"/><circle cx="275" cy="114" r="4" fill="currentColor"/></svg><span class="visual-index">/01</span></div><div class="project-content"><div class="project-title"><h3>DepthCloud</h3><span>01</span></div><p class="project-tagline">From camera views to spatial understanding.</p><p class="project-description">A local webcam reconstruction studio for collecting steady views, aligning cameras, and inspecting an estimated 3D surface.</p><ul class="tech-tags"><li>Python</li><li>Computer vision</li><li>Three.js</li></ul><a class="project-open" href="https://github.com/shiwamshoryasharma/DepthCloud">Explore DepthCloud <span aria-hidden="true">↗</span></a></div></article>
+<article class="project-card project-robot"><div class="project-visual" aria-hidden="true"><span class="visual-label">ROBOT AUTHORING</span><svg viewBox="0 0 540 230" fill="none"><ellipse cx="264" cy="192" rx="111" ry="19" stroke="currentColor" opacity=".3"/><path d="M229 187v-19h69v19l-35 9Z" fill="currentColor" opacity=".25"/><path d="m262 169-25-56 69-56 55 30" stroke="#728c92" stroke-width="24" stroke-linejoin="round"/><path d="m262 169-25-56 69-56 55 30" stroke="currentColor" stroke-width="12" stroke-linejoin="round"/><g fill="#172a30" stroke="currentColor" stroke-width="4"><circle cx="262" cy="164" r="16"/><circle cx="237" cy="113" r="17"/><circle cx="306" cy="57" r="14"/></g><path d="m351 84 16-15 19 14m-29 12 6 20 22-4" stroke="currentColor" stroke-width="5"/><path d="M136 93h47m-23-23v47M398 161h28m-14-14v28" stroke="currentColor" opacity=".4"/><path d="M190 164a81 81 0 0 1 91-103" stroke="currentColor" stroke-dasharray="4 6" opacity=".4"/></svg><span class="visual-index">/02</span></div><div class="project-content"><div class="project-title"><h3>URDF Builder 2.0</h3><span>02</span></div><p class="project-tagline">A workbench for the robots in your head.</p><p class="project-description">Author, validate, and visualize robot models with synchronized XML and 3D views in a desktop workspace.</p><ul class="tech-tags"><li>Robotics</li><li>TypeScript</li><li>Electron</li></ul><a class="project-open" href="https://github.com/shiwamshoryasharma/URDF-BUILDER-2.0">Explore URDF Builder 2.0 <span aria-hidden="true">↗</span></a></div></article>
+<article class="project-card project-cad"><div class="project-visual" aria-hidden="true"><span class="visual-label">PARAMETRIC GEOMETRY</span><svg viewBox="0 0 540 230" fill="none"><path d="m173 87 101-53 104 53v86l-103 50-102-50Z" fill="currentColor" opacity=".08"/><g stroke="currentColor" stroke-width="1.5"><path d="m173 87 101-53 104 53v86l-103 50-102-50Zm0 0 102 50 103-50M275 137v86"/><path d="m218 107 56-29 59 29v39l-58 29-57-29Zm0 0 57 29 58-29m-58 29v39"/><path d="m173 173 101-52 104 52M274 34v87" stroke-dasharray="5 5" opacity=".4"/><path d="m147 88-17 8v86l17-8m-17-34h-12m277-57 17 9v87l-17-9m17-32h12" opacity=".5"/></g><g fill="currentColor"><circle cx="173" cy="87" r="4"/><circle cx="274" cy="34" r="4"/><circle cx="378" cy="87" r="4"/><circle cx="275" cy="223" r="4"/></g></svg><span class="visual-index">/03</span></div><div class="project-content"><div class="project-title"><h3>AnishapeGeometry</h3><span>03</span></div><p class="project-tagline">Give an idea its first dimension.</p><p class="project-description">Parametric CAD with sketch constraints, editable feature history, solid modeling, and STEP/STL export.</p><ul class="tech-tags"><li>OpenCascade</li><li>WebAssembly</li><li>CAD</li></ul><a class="project-open" href="https://github.com/shiwamshoryasharma/AnishapeGeometry">Explore AnishapeGeometry <span aria-hidden="true">↗</span></a></div></article>
+<article class="project-card project-markdown"><div class="project-visual" aria-hidden="true"><span class="visual-label">WRITING WORKSPACE</span><div class="editor-visual"><div class="editor-top"><i></i><i></i><i></i><span>ideas.md</span></div><div class="editor-panes"><div><small>01</small><b># A useful idea</b><small>02</small><span>Make room for curiosity.</span><small>03</small><em>**Build something.**</em><small>04</small><span class="editor-line"></span><small>05</small><span class="editor-line short"></span></div><div><b>A useful idea</b><span>Make room for curiosity.</span><strong>Build something.</strong><i class="preview-line"></i><i class="preview-line short"></i></div></div></div><span class="visual-index">/04</span></div><div class="project-content"><div class="project-title"><h3>Ultimate Markdown</h3><span>04</span></div><p class="project-tagline">A little less friction between thoughts.</p><p class="project-description">A document workspace for live Markdown editing, linked files, rich media, and flexible export workflows.</p><ul class="tech-tags"><li>React</li><li>TypeScript</li><li>Developer tools</li></ul><a class="project-open" href="https://github.com/shiwamshoryasharma/Ultimate-Markdown">Explore Ultimate Markdown <span aria-hidden="true">↗</span></a></div></article>
+</div></section>
+<section id="district" class="district-section section-space" aria-labelledby="district-title">
+<div class="section-heading district-heading"><div><p class="eyebrow">02 / THE REPOSITORY REALM</p><h2 id="district-title">Every project, a guild.<br><span>Every path, a possibility.</span></h2><p class="section-description">A fantasy realm built from real code. Explore guild halls and astral observatories, meet the locals, or drive to a project and press F at its parking bay.</p></div><div class="snapshot"><span>PUBLIC GITHUB SNAPSHOT</span><strong id="updated">Loading district…</strong><span>Refreshed daily · built from real code</span></div></div>
+<div class="world-legend"><span>THE LOCALS</span><span>Anime adventurers</span><span>Elves</span><span>Dwarves</span><span>Beastfolk</span><span>Humans &amp; mages</span></div>
 <div class="workspace">
 <section class="city-panel" aria-label="Interactive repository city">
 <div class="scene-meta"><span class="chip"><span class="dot"></span> EXPLORER</span><span id="city-count" class="chip muted">Preparing buildings</span><button id="drive-mode" class="drive-mode-button" disabled>Drive the city ↗</button></div>
@@ -28,12 +80,25 @@
 </section>
 <aside class="sidebar" aria-label="Repository details">
 <section class="inspector"><p class="eyebrow">AT THIS ADDRESS</p><div class="repo-heading"><span id="repo-number">01</span><span class="tag" id="repo-language">Repository</span></div><h2 id="repo-name">Pick a tower.</h2><p id="repo-caption">Click any building or select a project below.</p><div id="repo-metrics" class="metrics"></div><div id="language-bar" class="language-bar" aria-hidden="true"></div><ul id="language-details" class="language-details"></ul><a id="repo-link" class="repo-link" hidden>Explore repository <span aria-hidden="true">↗</span></a><button id="drive-to-repo" class="drive-to-repo" disabled>Drive to this repository →</button></section>
+<section class="residents-panel"><p class="eyebrow">FELLOW TRAVELERS</p><p id="resident-description" aria-live="polite">Original fantasy residents stroll the garden paths.</p><div class="resident-controls"><button id="meet-locals" class="citizen-toggle" disabled>Meet the locals ↗</button><button id="pause-residents" class="citizen-toggle" aria-pressed="false" disabled>Pause residents</button></div></section>
 <section class="directory"><div class="directory-heading"><h2>District directory</h2><span id="list-count">—</span></div><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Find a repository…" aria-label="Find a repository" autocomplete="off"></label><div id="repo-list" class="repo-list"></div><p id="no-results" hidden>No matching repositories.</p></section>
 </aside>
 </div>
 <section class="about-strip"><div><span class="small-icon">▥</span><p><strong>Code becomes architecture.</strong><br>Height combines source files and code size. Languages shape the architecture and colors.</p></div><p>Public originals with detected code.<br>Forks, profile and resume repos excluded.<br><span id="total-code"></span><br>Restricted landmarks are fictional placeholders.</p></section>
-<footer><span>Made of curiosity, coffee, and a few thousand lines.</span><a href="https://github.com/shiwamshoryasharma/shiwamshoryasharma">View source ↗</a></footer>
+</section>
+<section id="about" class="portfolio-section section-space" aria-labelledby="about-title">
+<div class="section-heading"><div><p class="eyebrow">03 / HOW I THINK &amp; BUILD</p><h2 id="about-title">Across the stack.<br><span>Close to the real world.</span></h2></div></div>
+<div class="about-grid"><div class="about-note"><span class="note-symbol" aria-hidden="true">✳</span><h3>The interesting part is<br>where things connect.</h3><p>A camera sees pixels. A robot needs a world it can act in. A person needs an interface that makes sense of both.</p><p>That's the space I like working in: perception pipelines, simulation tools, digital twins, and responsive 3D workspaces.</p><div class="current-focus"><span class="dot"></span><div><small>ON MY WORKBENCH</small><p>Object reconstruction, robot authoring, and the connection between CAD, perception, and simulation.</p></div></div></div>
+<div class="toolkit-grid">
+<article class="toolkit-card"><span class="toolkit-icon">◎</span><span class="toolkit-number">01</span><h3>Robotics &amp; simulation</h3><p>From robot descriptions to virtual worlds.</p><ul><li>ROS / ROS 2</li><li>MoveIt 2</li><li>Isaac Sim / Lab</li><li>URDF / XRDF</li><li>Digital twins</li></ul></article>
+<article class="toolkit-card"><span class="toolkit-icon">✳</span><span class="toolkit-number">02</span><h3>AI &amp; perception</h3><p>From raw inputs to useful understanding.</p><ul><li>PyTorch</li><li>OpenCV</li><li>CUDA</li><li>Hugging Face</li><li>LLMs / RAG</li><li>MCP</li></ul></article>
+<article class="toolkit-card"><span class="toolkit-icon">&lt;/&gt;</span><span class="toolkit-number">03</span><h3>Full-stack &amp; 3D</h3><p>From an API to the last interaction.</p><ul><li>React / TypeScript</li><li>FastAPI / Python</li><li>Electron</li><li>Three.js</li><li>WebSockets</li><li>OpenCascade</li></ul></article>
+<article class="toolkit-card"><span class="toolkit-icon">⌘</span><span class="toolkit-number">04</span><h3>Cloud &amp; edge</h3><p>From local hardware to connected systems.</p><ul><li>AWS</li><li>Linux / WSL 2</li><li>Raspberry Pi</li><li>Arduino</li><li>SQL</li><li>Git</li></ul></article>
+</div></div></section>
+<section class="portfolio-section off-duty" aria-labelledby="off-duty-title"><div class="off-duty-copy"><p class="eyebrow">OFF THE CLOCK / STILL CURIOUS</p><h2 id="off-duty-title">A few other worlds<br>I like getting lost in.</h2><p>PC &amp; console gaming. Anime. Sci-fi films.<br>And a soundtrack with no language barriers.</p><div class="interest-tags"><span>🎮 Games</span><span>✦ Anime &amp; sci-fi</span><span>♫ Music</span></div></div><figure><img src="assets/anime-robotics-lab.png" alt="Vivy and Alice fan art at a sci-fi robotics workbench" width="1536" height="1024" loading="lazy" decoding="async"><figcaption>Vivy × Alice · Unofficial fan art. Characters belong to their respective owners.</figcaption></figure></section>
+<section id="connect" class="portfolio-section connect-section" aria-labelledby="connect-title"><div><p class="eyebrow">NEXT / KEEP EXPLORING</p><h2 id="connect-title">More worlds to build.<br><span>More ideas to connect.</span></h2><p>Follow the code, explore the research profile, or connect on LinkedIn.</p></div><div class="connect-links"><a href="https://github.com/shiwamshoryasharma"><span><small>THE WORK</small>GitHub</span><b aria-hidden="true">↗</b></a><a href="https://www.linkedin.com/in/shiwam-shorya/"><span><small>THE PROFESSIONAL PROFILE</small>LinkedIn</span><b aria-hidden="true">↗</b></a><a href="https://orcid.org/0009-0005-9798-8856"><span><small>THE RESEARCH IDENTITY</small>ORCID</span><b aria-hidden="true">↗</b></a></div></section>
+<footer class="site-footer portfolio-section"><a class="footer-name" href="#home">SHIWAM<span>・</span></a><span>Built with curiosity. Shared on the open web.</span><a href="https://github.com/shiwamshoryasharma/shiwamshoryasharma">View source ↗</a></footer>
 </main>
-<noscript><p class="no-script">Enable JavaScript to explore the 3D city, or <a href="https://github.com/shiwamshoryasharma">visit the GitHub profile</a>.</p></noscript>
-<script type="module" src="app.js"></script>
+<noscript><p class="no-script">The portfolio works without JavaScript. Enable it for the interactive city, or <a href="https://github.com/shiwamshoryasharma?tab=repositories">browse the repositories on GitHub</a>.</p></noscript>
+<script type="module" src="portfolio.js"></script><script type="module" src="app.js"></script>
 </body></html>

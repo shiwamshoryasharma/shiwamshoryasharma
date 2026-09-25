@@ -2,14 +2,16 @@ import { safeRepoUrl } from './data.js';
 export function createDrivingUI(city,onOpen){
   const $=id=>document.getElementById(id),host=$('viewport');
   const originalLabel=host.getAttribute('aria-label');
-  const held=new Set(),touch=new Set();let goal=null,lastParkingText='';
+  const held=new Set(),touch=new Set();let goal=null,lastParkingText='',savedScroll=0;
   const mapping={KeyW:'forward',ArrowUp:'forward',KeyS:'reverse',ArrowDown:'reverse',KeyA:'left',ArrowLeft:'left',KeyD:'right',ArrowRight:'right',Space:'brake'};
   function sync(){const active=name=>held.has(name)||touch.has(name);city.setDriveInput({throttle:Number(active('forward'))-Number(active('reverse')),steer:Number(active('right'))-Number(active('left')),brake:active('brake')});}
   function clear(){held.clear();touch.clear();sync();}
   function setMode(enabled){
+    if(enabled&&!city.driving)savedScroll=window.scrollY;
     clear();host.setAttribute('aria-label',enabled?'Driving view. W or Up accelerates, S or Down reverses, A and D steer, Space brakes, F opens a parked repository, R resets.':originalLabel);document.body.classList.toggle('driving-mode',enabled);$('drive-overlay').hidden=!enabled;
     $('drive-mode').textContent=enabled?'← Back to skyline':'Drive the city ↗';$('drive-mode').setAttribute('aria-pressed',String(enabled));
     city.setDriving(enabled);host.focus({preventScroll:true});
+    if(enabled)document.querySelector('.city-panel').scrollIntoView({block:'start',behavior:'instant'});else window.scrollTo({top:savedScroll,behavior:'instant'});
     $('rotate').setAttribute('aria-pressed',String(city.rotating));
   }
   function allowed(){const status=city.parking;return city.driving&&status.canOpen&&safeRepoUrl(status.repo?.url)?status:null;}

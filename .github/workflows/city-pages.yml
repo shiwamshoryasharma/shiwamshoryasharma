@@ -9,6 +9,7 @@ on:
       - 'tests/*.test.mjs'
       - 'tests/*.py'
       - 'assets/github-data.json'
+      - 'assets/anime-robotics-lab.png'
       - '.github/workflows/city-pages.yml'
   workflow_run:
     workflows: ['Refresh profile cards']

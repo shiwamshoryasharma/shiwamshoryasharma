@@ -2,8 +2,8 @@ import * as THREE from 'three';
 export function addDriveScenery(scene,world,box,material,map){
   function sign(text,x,y,z,color='#a8f5d1',width=2.8){
     const canvas=document.createElement('canvas');canvas.width=512;canvas.height=128;
-    const ctx=canvas.getContext('2d');ctx.fillStyle='#102033';ctx.fillRect(0,0,512,128);ctx.strokeStyle=color;ctx.lineWidth=9;ctx.strokeRect(5,5,502,118);
-    ctx.fillStyle=color;ctx.textAlign='center';let size=42;while(size>16){ctx.font=`700 ${size}px Segoe UI, sans-serif`;if(ctx.measureText(text).width<470)break;size-=2;}ctx.fillText(text,256,78);
+    const ctx=canvas.getContext('2d');ctx.fillStyle='#493b29';ctx.fillRect(0,0,512,128);ctx.strokeStyle=color;ctx.lineWidth=9;ctx.strokeRect(5,5,502,118);
+    ctx.fillStyle=color;ctx.textAlign='center';let size=42;while(size>16){ctx.font=`700 ${size}px Georgia, serif`;if(ctx.measureText(text).width<470)break;size-=2;}ctx.fillText(text,256,78);
     const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
     const mesh=new THREE.Mesh(new THREE.PlaneGeometry(width,width/4),new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide}));mesh.position.set(x,y,z);world.add(mesh);return mesh;
   }
@@ -13,9 +13,9 @@ export function addDriveScenery(scene,world,box,material,map){
     for(const side of [-1,1])box(world,x+side*1.17,.105,z,.035,.025,1.15,'#a8f5d1',true);
     box(world,x,.107,z+.56,2.35,.025,.035,'#a8f5d1',true);
     const marker=sign('P',x,.12,z,'#a8f5d1',.85);marker.rotation.x=-Math.PI/2;
-    box(world,x+.85,1.05,z-.65,.045,1.95,.045,'#9fbacc');
+    box(world,x+.85,1.05,z-.65,.045,1.95,.045,'#806044');
     sign(`P  ${String(repo.index).padStart(2,'0')}`,x+.85,1.9,z-.65,'#a8f5d1',.9);
-    sign(repo.name,x,2.05,z-1.72,'#d4e8ff',2.8);
+    sign(repo.name,x,2.05,z-1.72,'#e5d3a1',2.8);
   }
   for(const landmark of map.restricted){
     const {x,z}=landmark;const royal=landmark.kind==='royal';const stone=royal?'#8e749e':'#728591';const gold=royal?'#e2b970':'#b3dae3';
@@ -66,7 +66,7 @@ export function addDriveScenery(scene,world,box,material,map){
     bonnetIndices.push(a,c,b,b,c,d);
   }
   const bonnetGeometry=new THREE.BufferGeometry();bonnetGeometry.setAttribute('position',new THREE.Float32BufferAttribute(bonnetVertices,3));bonnetGeometry.setIndex(bonnetIndices);bonnetGeometry.computeVertexNormals();
-  const bodyPaint=new THREE.MeshStandardMaterial({color:'#315971',metalness:.65,roughness:.24,side:THREE.DoubleSide});
+  const bodyPaint=new THREE.MeshStandardMaterial({color:'#817450',metalness:.5,roughness:.32,side:THREE.DoubleSide});
   const bonnet=new THREE.Mesh(bonnetGeometry,bodyPaint);cabin.add(bonnet);
   // Rounded fenders and a dark front lip complete the car's body, without a center stripe.
   for(const side of [-1,1]){

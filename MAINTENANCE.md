@@ -61,7 +61,7 @@ The README links to a separate GitHub Pages application because README rendering
 - Automatic orbit respects reduced-motion preferences. Drawing pauses in hidden tabs, pixel density is capped, and window geometry is instanced. Without a working 3D context, the repository directory and static skyline link remain available.
 - Unlike the compact README skyline, the interactive grid includes all eligible repositories with detected code, expanding its rows and columns as the snapshot grows. Interactive heights combine logarithmic source-file counts and code bytes; commit counts do not determine height. Language selects the architectural family, while a stable repository-name seed varies orientation, setbacks, and windows.
 
-The **Deploy repository city** workflow publishes changes to city files and redeploys after a successful **Refresh profile cards** run. The `workflow_run` trigger is deliberate: commits made by the default Actions token do not normally start another push workflow. Deployment stages only the `city/` directory and the public snapshot; local files, profile artwork, and unrelated assets are not published as site files.
+The **Deploy repository city** workflow publishes changes to city files and redeploys after a successful **Refresh profile cards** run. The `workflow_run` trigger is deliberate: commits made by the default Actions token do not normally start another push workflow. Deployment stages `city/`, the public snapshot, and the explicitly allowlisted existing anime banner. Resume files and unrelated local assets are not published.
 
 To test and preview locally from the repository root:
 
@@ -89,8 +89,20 @@ Run all tests with `node --test tests/*.test.mjs`. They cover motion and braking
 
 The daily refresh counts source files from each public repository's default-branch Git tree. Recognized programming, notebook, markup, and stylesheet extensions count; vendored dependencies, build output, and minified files are excluded. Only the count is stored, never file paths. A truncated Git tree produces an unknown count, with a code-size-only height fallback. This is an extension-based measure, not an executable-script or quality assessment.
 
-Python produces research terraces, notebooks observatory campuses, TypeScript crystal spires, JavaScript connected towers, HTML/CSS creative studios, and other languages engineering hubs. Dominant language colors the facade; secondary languages accent it. Source files and code bytes affect height on logarithmic scales. The compact README skyline retains its separate code-bytes-only scale.
+Python produces mage archives, notebooks astral observatories, TypeScript crystal citadels, JavaScript twin guild halls, HTML/CSS artisan quarters, and other languages forge keeps. Dominant language colors the facade; secondary languages accent it. Source files and code bytes affect height on logarithmic scales. The compact README skyline retains its separate code-bytes-only scale.
 
 Window panes are offset from their actual wall surfaces, including side faces, to avoid z-fighting. Lit and unlit panes use separate instanced materials; daylight reduces the visible interior illumination. The road width is 4.6 world units and the car collision diameter is 1.44 units. The curved bonnet has no road-like center stripe.
 
 Run source-count checks with `python -m unittest discover -s tests -p "test_*.py"`.
+
+## Fantasy portfolio
+
+The Pages homepage is a full public portfolio with selected project summaries, engineering skills, a CSS 3D identity artifact, interests, and verified GitHub, LinkedIn, and ORCID links. Its content is ordinary HTML and remains available without WebGL. It does not publish employers, education, contact details, location, resume files, or private repository metadata. The existing Vivy/Alice fan-art banner is reused in the interests section with attribution; no additional raster artwork was generated.
+
+`city/portfolio.css` styles the responsive woodland theme. `portfolio.js` rotates the identity artifact on request; it does not run a continuous animation. The world loads its Three.js modules when approaching the viewport, and rendering stops when off screen or the document is hidden. Reduced-motion preference disables automatic orbit and resident movement; visitors may enable them explicitly.
+
+`city/residents.js` defines deterministic footpath routes and a maximum of 18 residents. `characters.js` renders original procedural anime-inspired adult adventurers, elves, dwarves, beastfolk, humans, and mages. These are stylized low-poly characters, not licensed anime character models. Walking uses articulated limbs and a fixed route clock; residents are scenery, without combat, conversations, or collision physics. They keep to the outer garden paths and do not enter the public buildings or restricted grounds. Use **Meet the locals** for successive close-up views and **Pause residents** to stop walking.
+
+`realm.js` adds instanced cobblestones, woodland scenery, crystals, and flowers. Buildings retain their repository-based geometry and count-driven heights with stone-and-timber facades, heraldic language colors, steep roofs, and observatory domes. Driving and F-to-open work as before. Entering driving mode hides portfolio sections; exiting restores the prior scroll position.
+
+The page includes canonical, description, Open Graph, and social-card metadata. Build revisions invalidate first-party JavaScript and CSS together on each deployment. Keep the asset staging allowlist explicit; never copy the entire local `assets/` or resume directory into the site.

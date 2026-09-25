@@ -2,7 +2,7 @@ import { createDistrict, formatBytes } from './data.js';
 import { createDrivingUI } from './drive-ui.js';
 const $=id=>document.getElementById(id);
 let city,drivingUI,selectedRepo,buildings=[];
-const cameraButtons=['zoom-in','zoom-out','reset','rotate','theme','fullscreen','drive-mode','drive-to-repo'];
+const cameraButtons=['zoom-in','zoom-out','reset','rotate','theme','fullscreen','drive-mode','drive-to-repo','meet-locals','pause-residents'];
 function unavailable(message){$('loading').hidden=true;$('fallback').hidden=false;$('fallback-message').textContent=message;cameraButtons.forEach(id=>$(id).disabled=true);}
 function element(tag,text,className){const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;return node;}
 function select(repo,focus=false){
@@ -35,6 +35,9 @@ function directory(){
   }
   $('list-count').textContent=visible.length;$('no-results').hidden=visible.length>0;
 }
+$('meet-locals').addEventListener('click',()=>{const name=city?.meetResident();if(name){$('resident-description').textContent=name;$('rotate').setAttribute('aria-pressed','false');}});
+$('pause-residents').addEventListener('click',()=>{const moving=city?.toggleResidents();$('pause-residents').textContent=moving?'Pause residents':'Let residents walk';$('pause-residents').setAttribute('aria-pressed',String(!moving));});
+$('viewport').addEventListener('citizenspaused',()=>{$('pause-residents').textContent='Let residents walk';$('pause-residents').setAttribute('aria-pressed','true');});
 $('search').addEventListener('input',directory);
 $('drive-to-repo').addEventListener('click',()=>drivingUI?.start(selectedRepo));
 $('retry').addEventListener('click',()=>location.reload());
@@ -55,16 +58,19 @@ async function start(){
     if(!buildings.length)throw new Error('No code repositories are present in this snapshot.');
     $('updated').textContent=`Updated ${data.updated}`;$('city-count').textContent=`${buildings.length} buildings · all districts`;
     $('total-code').textContent=`${formatBytes(district.totalBytes)} across ${buildings.length} repositories.`;directory();select(buildings[0]);
-    try{
+    const loadWorld=async()=>{try{
       const {createCity}=await import('./scene.js');
       city=createCity($('viewport'),district,repo=>select(repo),(repo,x,y)=>{
         const tip=$('tooltip');tip.hidden=!repo;if(!repo)return;tip.textContent=repo.name;
         tip.style.left=`${Math.max(8,Math.min(x+12,$('viewport').clientWidth-270))}px`;tip.style.top=`${Math.max(8,y-45)}px`;
       },unavailable);
       drivingUI=createDrivingUI(city,repo=>select(repo));
-      city.select(buildings[0]);$('rotate').setAttribute('aria-pressed',String(city.rotating));$('loading').hidden=true;
+      $('meet-locals').disabled=false;$('pause-residents').disabled=false;
+      $('pause-residents').textContent=city.residentsMoving?'Pause residents':'Let residents walk';$('pause-residents').setAttribute('aria-pressed',String(!city.residentsMoving));
+      city.select(selectedRepo||buildings[0]);$('rotate').setAttribute('aria-pressed',String(city.rotating));$('loading').hidden=true;
       if(!document.fullscreenEnabled)$('fullscreen').hidden=true;
-    }catch(error){console.error('City rendering failed:',error);unavailable('3D could not start on this browser. Explore the directory below or open the illustrated skyline.');}
+    }catch(error){console.error('City rendering failed:',error);unavailable('3D could not start on this browser. Explore the directory below or open the illustrated skyline.');}};
+    const worldObserver=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){worldObserver.disconnect();loadWorld();}},{rootMargin:'300px'});worldObserver.observe($('viewport'));
   }catch(error){console.error('District data failed:',error);$('updated').textContent='Snapshot unavailable';unavailable('The repository snapshot could not be loaded. Please try again shortly, or visit the GitHub profile.');}
 }
 window.addEventListener('pagehide',event=>{if(!event.persisted)city?.dispose();});

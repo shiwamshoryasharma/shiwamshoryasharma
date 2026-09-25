@@ -6,6 +6,8 @@
 
 ### Robotics · AI · Full-stack engineering
 
+**[Enter my portfolio & fantasy realm ↗](https://shiwamshoryasharma.github.io/shiwamshoryasharma/)**
+
 I build software that connects what machines **see**, how they **move**, and how people **work with them**.
 
 <p align="center">
@@ -88,8 +90,8 @@ Also exploring perception with [Object Depth Analyzer](https://github.com/shiwam
 </a>
 
 <p align="center">
-<a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/"><strong>Enter the interactive 3D district ↗</strong></a><br />
-<sub>Rotate · Zoom · Pan · Drive the city · Park and press F</sub>
+<a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/"><strong>Explore the portfolio & fantasy realm ↗</strong></a><br />
+<sub>Guild halls · Walking fantasy residents · Drive & explore · Park and press F</sub>
 </p>
 
 The city grows with my public code repositories. Languages shape the architecture; source-file counts and code size shape its height. Click the skyline to explore it in 3D, or get behind the wheel and drive to a repository. Stop at its mint parking bay and press **F** to open it. Government and royal landmarks mark restricted scenery; private repository details stay private.

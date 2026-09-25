@@ -19,10 +19,12 @@ def main():
         if source.suffix == '.js':
             content = re.sub(r"(['\"])(\./[\w-]+\.js)\1", lambda m: f'{m[1]}{m[2]}?v={revision}{m[1]}', content)
         elif source.suffix == '.html':
-            content = content.replace('src="app.js"', f'src="app.js?v={revision}"').replace('href="styles.css"', f'href="styles.css?v={revision}"')
+            content = re.sub(r'(src|href)="([\w-]+\.(?:js|css))"', lambda m: f'{m[1]}="{m[2]}?v={revision}"', content)
         target.write_text(content, encoding='utf-8')
     (DESTINATION / 'data').mkdir(exist_ok=True)
     shutil.copy2(ROOT / 'assets/github-data.json', DESTINATION / 'data/github-data.json')
+    (DESTINATION / 'assets').mkdir(exist_ok=True)
+    shutil.copy2(ROOT / 'assets/anime-robotics-lab.png', DESTINATION / 'assets/anime-robotics-lab.png')
     print(f'Staged public city at {DESTINATION} ({revision})')
 
 

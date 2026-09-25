@@ -1,3 +1,5 @@
+import { addResidents } from './characters.js';
+import { addRealmScenery } from './realm.js';
 import { addRepositoryBuilding } from './buildings.js';
 import * as THREE from 'three';
 import { OrbitControls } from './vendor/OrbitControls.js';
@@ -12,44 +14,42 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   renderer.toneMappingExposure=1.05;
   host.append(renderer.domElement);
   const scene=new THREE.Scene();
-  scene.background=new THREE.Color('#0c1424');
+  scene.background=new THREE.Color('#203335');
   const span=district.span;
-  scene.fog=new THREE.Fog('#0c1424',span*2,span*5);
+  scene.fog=new THREE.Fog('#203335',span*2,span*5);
   const camera=new THREE.PerspectiveCamera(40,1,.1,span*12);
   const controls=new OrbitControls(camera,renderer.domElement);
   controls.enableDamping=true;controls.dampingFactor=.08;controls.minDistance=8;controls.maxDistance=span*3;
   controls.maxPolarAngle=Math.PI*.47;controls.minPolarAngle=.12;controls.autoRotateSpeed=.38;
   controls.enablePan=true;controls.screenSpacePanning=true;
-  const hemi=new THREE.HemisphereLight('#b7d5ff','#393456',1.35);scene.add(hemi);
-  const key=new THREE.DirectionalLight('#ffe3c1',1.8);key.position.set(-20,45,25);scene.add(key);
+  const hemi=new THREE.HemisphereLight('#d4dfc3','#646448',1.65);scene.add(hemi);
+  const key=new THREE.DirectionalLight('#ffe0ac',2.1);key.position.set(-20,45,25);scene.add(key);
   const rim=new THREE.DirectionalLight('#a497ff',.9);rim.position.set(30,20,-30);scene.add(rim);
   const geometry=new THREE.BoxGeometry(1,1,1);
   const materials=new Map();
   function material(color,glow=false){
     const id=color+glow;
-    if(!materials.has(id)) materials.set(id,glow ? new THREE.MeshBasicMaterial({color}) : new THREE.MeshStandardMaterial({color,roughness:.5,metalness:.25}));
+    if(!materials.has(id)) materials.set(id,glow ? new THREE.MeshBasicMaterial({color}) : new THREE.MeshStandardMaterial({color,roughness:.8,metalness:.08}));
     return materials.get(id);
   }
   function box(parent,x,y,z,w,h,d,color,glow=false){
     const mesh=new THREE.Mesh(geometry,material(color,glow));mesh.position.set(x,y,z);mesh.scale.set(w,h,d);parent.add(mesh);return mesh;
   }
   const world=new THREE.Group();scene.add(world);
-  box(world,0,-1,0,span+1,1.8,span+1,'#10172b');
-  box(world,0,-.11,0,span,.16,span,'#273449');
-  box(world,0,-.65,0,span+1.07,.12,span+1.07,'#8e7ce5',true);
-  box(world,0,-1.96,0,span-1,.13,span-1,'#427b82',true);
+  box(world,0,-1,0,span+1,1.8,span+1,'#4c5149');
+  box(world,0,-.11,0,span,.16,span,'#617861');
+  box(world,0,-.65,0,span+1.07,.25,span+1.07,'#77856b');
+  box(world,0,-1.96,0,span-1,.3,span-1,'#394b40');
   // Wide two-way streets surround each six-unit building lot.
   const rowCenter=(district.rows-1)/2, colCenter=(district.columns-1)/2;
   const spacing=district.spacing,roadWidth=district.roadWidth;
   for(let col=0;col<=district.columns;col++){
     const x=(col-colCenter-.5)*spacing;
-    box(world,x,.01,0,roadWidth,.025,span-.8,'#111e30');
-    for(let z=-span/2+1;z<span/2;z+=2.2)box(world,x,.03,z,.06,.015,.8,'#c5c8b2',true);
+    box(world,x,.01,0,roadWidth,.025,span-.8,'#777b69');
   }
   for(let row=0;row<=district.rows;row++){
     const z=(row-rowCenter-.5)*spacing;
-    box(world,0,.04,z,span-.8,.025,roadWidth,'#111e30');
-    for(let x=-span/2+1;x<span/2;x+=2.2)box(world,x,.06,z,.8,.015,.06,'#c5c8b2',true);
+    box(world,0,.04,z,span-.8,.025,roadWidth,'#777b69');
   }
   const accents=['#a8f5d1','#ccaaff','#ffb78d','#99ddff','#ffb3dd'];
   const windowInstances=[];
@@ -63,35 +63,38 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   }
   function label(repo){
     const canvas=document.createElement('canvas');canvas.width=512;canvas.height=96;
-    const ctx=canvas.getContext('2d');ctx.fillStyle='#142036ee';ctx.beginPath();ctx.roundRect(1,1,510,94,25);ctx.fill();
+    const ctx=canvas.getContext('2d');ctx.fillStyle='#343b2eee';ctx.beginPath();ctx.roundRect(1,1,510,94,25);ctx.fill();
     ctx.strokeStyle='#8299bd66';ctx.lineWidth=2;ctx.stroke();ctx.fillStyle=repo.color;ctx.beginPath();ctx.roundRect(16,18,62,60,16);ctx.fill();
     ctx.fillStyle='#ffffff';ctx.font='600 30px Segoe UI, sans-serif';ctx.fillText(String(repo.index).padStart(2,'0'),28,59);
-    ctx.font='500 25px Segoe UI, sans-serif';ctx.fillStyle='#e5edff';
+    ctx.font='500 25px Georgia, serif';ctx.fillStyle='#e5edff';
     let title=repo.name;while(ctx.measureText(title).width>394)title=title.slice(0,-2)+'…';ctx.fillText(title,93,58);
     const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
     const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthTest:false,transparent:true}));
-    sprite.position.set(repo.x,repo.height+2.2,repo.z);sprite.scale.set(6.5,1.22,1);sprite.renderOrder=3;scene.add(sprite);labels.push(sprite);
+    sprite.position.set(repo.x,repo.height+3.4,repo.z);sprite.scale.set(6.5,1.22,1);sprite.renderOrder=3;scene.add(sprite);labels.push(sprite);
   }
   for(const repo of district.buildings){
     const {x,z,height:h,index}=repo;
     const accent=accents[(index-1)%accents.length];
     const group=new THREE.Group();group.position.set(x,0,z);world.add(group);
-    box(group,0,.14,0,6,.28,6,'#4c6077');
-    box(group,0,.32,0,5.7,.09,5.7,accent,true);
-    box(group,0,.67,0,4.7,.6,4.7,'#273b52');
+    box(group,0,.14,0,6,.28,6,'#819176');
+    box(group,0,.32,0,5.7,.09,5.7,'#9b9e80');
+    box(group,0,.67,0,4.7,.6,4.7,'#82735c');
     addRepositoryBuilding(repo,group,box,material,selectables,windowInstances);
     for(const side of [-1,1]){
-      tree(x+side*2.5,z+2.25,index%2?'#458d87':'#867bc0');
+      tree(x+side*2.45,z+1.8,index%2?'#69977b':'#b49bbb');
       box(world,x+side*2.55,.12,z-2.4,.65,.16,.65,'#263d43');
-      box(world,x+side*2.55,.8,z-2.4,.045,1.25,.045,'#8096aa');
-      box(world,x+side*2.55,1.43,z-2.4,.28,.06,.28,accent,true);
+      box(world,x+side*2.55,.8,z-2.4,.045,1.25,.045,'#71583e');
+      box(world,x+side*2.55,1.43,z-2.4,.22,.27,.22,'#edce86',true);
+      box(world,x+side*2.55,1.61,z-2.4,.32,.07,.32,'#70573c');
+      box(world,x+side*2.55,1.27,z-2.4,.3,.06,.3,'#70573c');
     }
-    // One miniature car parked along each block and a four-stripe crosswalk.
-    box(world,x+3.7,.3,z-1.2,.86,.42,1.6,accent);
-    box(world,x+3.7,.6,z-1.35,.72,.24,.85,'#344157');
-    for(let n=0;n<7;n++)box(world,x-spacing/2-1.35+n*.45,.085,z+3.45,.22,.02,.85,'#b8cad7',true);
+    // Parked travel wagons share the existing collision footprint.
+    box(world,x+3.7,.3,z-1.2,.86,.42,1.6,'#886a46');
+    box(world,x+3.7,.6,z-1.35,.72,.34,.85,'#c1b894');
     label(repo);
   }
+  addRealmScenery(world,district,box,material);
+  const citizens=addResidents(world,district,box,material);
   const litWindowMaterial=new THREE.MeshBasicMaterial({color:'#9b9b9b'});
   const darkWindowMaterial=new THREE.MeshStandardMaterial({color:'#ffffff',roughness:.3,metalness:.35});
   const transform=new THREE.Object3D();
@@ -122,10 +125,12 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   }
   const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
   controls.autoRotate=!reducedMotion.matches;
+  let citizensMoving=!reducedMotion.matches,citizenTime=0,citizenIndex=-1,inView=false;
+  const visibilityObserver=new IntersectionObserver(entries=>{inView=entries[0].isIntersecting;last=0;dirty=true;},{rootMargin:'120px'});visibilityObserver.observe(host);
   const markDirty=()=>{dirty=true;};controls.addEventListener('change',markDirty);
   const resize=()=>{const {width,height}=host.getBoundingClientRect();if(width<1||height<1)return;renderer.setSize(width,height);camera.aspect=width/height;camera.updateProjectionMatrix();dirty=true;};
   const observer=new ResizeObserver(resize);observer.observe(host);resize();
-  function reset(){if(driveMode){car=spawnCar(driveWorld);driveInput={};driveCamera();emitDrive();dirty=true;return;}controls.target.set(0,4,0);const distance=span*(camera.aspect<1?2.5:1.95);camera.position.copy(new THREE.Vector3(1,.83,1.2).normalize().multiplyScalar(distance).add(controls.target));controls.update();dirty=true;}
+  function reset(){if(driveMode){car=spawnCar(driveWorld);driveInput={};driveCamera();emitDrive();dirty=true;return;}controls.target.set(0,4,0);const distance=span*(camera.aspect<1?2.25:1.7);camera.position.copy(new THREE.Vector3(1,.83,1.2).normalize().multiplyScalar(distance).add(controls.target));controls.update();dirty=true;}
   reset();
   function select(repo,focus=false){
     selected=repo;selection.visible=true;selection.position.set(repo.x,.4,repo.z);
@@ -155,14 +160,15 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   host.addEventListener('keydown',keyboard);
   const lost=event=>{event.preventDefault();renderer.setAnimationLoop(null);onFailure('The graphics connection was interrupted. Reload to reopen the 3D view; repository links still work.');};
   renderer.domElement.addEventListener('webglcontextlost',lost);
-  const motionChanged=()=>{if(reducedMotion.matches){controls.autoRotate=false;host.dispatchEvent(new CustomEvent('orbitstopped'));}};
+  const motionChanged=()=>{if(reducedMotion.matches){controls.autoRotate=false;citizensMoving=false;citizens.update(citizenTime,false);dirty=true;host.dispatchEvent(new CustomEvent('orbitstopped'));host.dispatchEvent(new CustomEvent('citizenspaused'));}};
   reducedMotion.addEventListener('change',motionChanged);
   const visibilityChanged=()=>{last=0;dirty=true;if(document.hidden){driveInput={};car.speed=0;}};document.addEventListener('visibilitychange',visibilityChanged);
   renderer.setAnimationLoop(time=>{
-    if(disposed||document.hidden)return;
+    if(disposed||document.hidden||!inView)return;
     if(time-last<1000/30)return;
     const delta=last?Math.min((time-last)/1000,.1):1/30;last=time;
     let moved=false;
+    if(citizensMoving){citizenTime+=delta;citizens.update(citizenTime);dirty=true;}
     if(driveMode){
       accumulator+=delta;
       while(accumulator>=1/60){car=stepCar(car,driveInput,1/60,driveWorld);accumulator-=1/60;}
@@ -174,14 +180,25 @@ export function createCity(host, district, onSelect, onHover, onFailure) {
   return {
     reset,zoom,select,setDriving,
     get driving(){return driveMode;},
+    get residentsMoving(){return citizensMoving;},
+    toggleResidents(){citizensMoving=!citizensMoving;citizens.update(citizenTime,citizensMoving);dirty=true;return citizensMoving;},
+    meetResident(){
+      if(driveMode||!citizens.residents.length)return null;
+      const resident=citizens.residents[++citizenIndex%citizens.residents.length];
+      controls.autoRotate=false;
+      const position=resident.group.position;
+      const front=new THREE.Vector3(Math.sin(resident.group.rotation.y),0,Math.cos(resident.group.rotation.y));
+      controls.target.set(position.x,1.1,position.z);camera.position.copy(controls.target).add(front.multiplyScalar(3.1)).add(new THREE.Vector3(.8,.5,.4));
+      controls.update();dirty=true;return resident.name;
+    },
     get parking(){return parkingStatus(car,driveWorld);},
     setDriveInput(input){driveInput={...input};},
     onDriveUpdate(callback){driveObserver=callback;},
     get rotating(){return controls.autoRotate;},
     toggleRotation(){controls.autoRotate=!controls.autoRotate;dirty=true;return controls.autoRotate;},
-    toggleDaylight(){daylight=!daylight;scene.background.set(daylight?'#a1b9d4':'#0c1424');scene.fog.color.copy(scene.background);hemi.intensity=daylight?2:1.35;key.intensity=daylight?2.6:1.8;rim.intensity=daylight?.5:.9;renderer.toneMappingExposure=daylight?1:1.05;litWindowMaterial.color.set(daylight?'#555555':'#9b9b9b');starField.visible=!daylight;dirty=true;return daylight;},
+    toggleDaylight(){daylight=!daylight;scene.background.set(daylight?'#bbcbb8':'#203335');scene.fog.color.copy(scene.background);hemi.intensity=daylight?2:1.65;key.intensity=daylight?2.6:2.1;rim.intensity=daylight?.5:.9;renderer.toneMappingExposure=daylight?1:1.05;litWindowMaterial.color.set(daylight?'#555555':'#9b9b9b');starField.visible=!daylight;dirty=true;return daylight;},
     dispose(){
-      disposed=true;renderer.setAnimationLoop(null);observer.disconnect();controls.dispose();host.removeEventListener('keydown',keyboard);document.removeEventListener('visibilitychange',visibilityChanged);reducedMotion.removeEventListener('change',motionChanged);
+      disposed=true;renderer.setAnimationLoop(null);observer.disconnect();visibilityObserver.disconnect();controls.dispose();host.removeEventListener('keydown',keyboard);document.removeEventListener('visibilitychange',visibilityChanged);reducedMotion.removeEventListener('change',motionChanged);
       renderer.domElement.removeEventListener('pointerdown',pointerDown);renderer.domElement.removeEventListener('pointerup',pointerUp);renderer.domElement.removeEventListener('pointermove',pointerMove);renderer.domElement.removeEventListener('pointerleave',pointerLeave);renderer.domElement.removeEventListener('webglcontextlost',lost);
       const geometries=new Set(),mats=new Set(),textures=new Set();scene.traverse(o=>{if(o.geometry)geometries.add(o.geometry);if(o.material){for(const m of Array.isArray(o.material)?o.material:[o.material]){mats.add(m);if(m.map)textures.add(m.map);}}});geometries.forEach(g=>g.dispose());textures.forEach(t=>t.dispose());mats.forEach(m=>m.dispose());renderer.dispose();renderer.domElement.remove();
     }

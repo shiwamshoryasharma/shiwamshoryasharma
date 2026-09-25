@@ -1,3 +1,4 @@
+import { planRoofs, roofMeshData } from './roofs.js';
 import * as THREE from 'three';
 
 // Facade panes sit outside the actual wall surface, avoiding coplanar flicker.
@@ -45,11 +46,6 @@ export function addRepositoryBuilding(repo,group,box,material,selectables,window
   }
   const top=design.parts.reduce((a,b)=>a.y+a.h>b.y+b.h?a:b);
   const roofY=.82+top.y+top.h;
-  function peakedRoof(part,roofHeight){
-    const roof=new THREE.Mesh(new THREE.ConeGeometry(1,1,4),material(roofColor));
-    roof.rotation.y=Math.PI/4;roof.scale.set((part.w+.45)/Math.SQRT2,roofHeight,(part.d+.45)/Math.SQRT2);
-    roof.position.set(part.x,.79+part.y+part.h+roofHeight/2,part.z);group.add(roof);
-  }
   if(design.roof==='dome'){
     const dome=new THREE.Mesh(new THREE.SphereGeometry(.8,16,10,0,Math.PI*2,0,Math.PI/2),material('#8cabb7'));
     dome.position.set(top.x,roofY,top.z);group.add(dome);
@@ -57,15 +53,20 @@ export function addRepositoryBuilding(repo,group,box,material,selectables,window
     box(group,top.x,roofY+.8,top.z,.04,.55,.04,'#d3b777');
     const star=new THREE.Mesh(new THREE.OctahedronGeometry(.15),material('#e5d69b',true));star.position.set(top.x,roofY+1.15,top.z);group.add(star);
   }else{
-    peakedRoof(top,design.roof==='spire'?2.15:1.4);
-    // Lower wings keep their own pitched roofs instead of sharing a flat office crown.
-    for(const part of design.parts){
-      if(part===top||part.y!==0||part.h>=top.y+top.h)continue;
-      const covered=design.parts.some(q=>q!==part&&q.y>=part.h-.01&&Math.abs(q.x-part.x)<(q.w+part.w)/2&&Math.abs(q.z-part.z)<(q.d+part.d)/2);
-      if(!covered)peakedRoof(part,1.15);
+    const roofs=planRoofs(design.parts,design.roof==='spire'?'spire':'hip');
+    for(const roof of roofs){
+      const {positions,indices}=roofMeshData(roof);
+      const indexed=new THREE.BufferGeometry();indexed.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));indexed.setIndex(indices);
+      const geometry=indexed.toNonIndexed();indexed.dispose();geometry.computeVertexNormals();
+      const mesh=new THREE.Mesh(geometry,material(roofColor));mesh.userData.repo=repo;group.add(mesh);selectables.push(mesh);
+      // Fascia follows the same exact footprint as the roof; nothing floats outside it.
+      const width=roof.x1-roof.x0,depth=roof.z1-roof.z0,cx=(roof.x0+roof.x1)/2,cz=(roof.z0+roof.z1)/2;
+      box(group,cx,roof.y-.025,cz,width,.065,depth,'#735a43');
+      if(design.parts[roof.partIndex]===top){
+        box(group,cx,roof.y+roof.h+.22,cz,.035,.5,.035,'#d8bf84');
+        box(group,cx+.17,roof.y+roof.h+.34,cz,.34,.23,.025,accent);
+      }
     }
-    box(group,top.x,roofY+(design.roof==='spire'?2.3:1.55),top.z,.035,.7,.035,'#d8bf84');
-    box(group,top.x+.17,roofY+(design.roof==='spire'?2.5:1.75),top.z,.34,.23,.025,accent);
   }
   // Heraldic hanging banner in the primary language color.
   const bannerPart=design.parts[0];

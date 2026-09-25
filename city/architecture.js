@@ -7,16 +7,16 @@ export function designBuilding(repo) {
   const language=repo.language;
   const family=language==='Jupyter Notebook'?'Astral observatory':language==='Python'?'Mage archives':language==='TypeScript'?'Crystal citadel':language==='JavaScript'?'Twin guild halls':['HTML','CSS','SCSS'].includes(language)?'Artisan quarters':'Forge keep';
   const parts=[];
-  const add=(x,z,w,d,y,h)=>parts.push({x,z,w,d,y,h});
+  const add=(x,z,w,d,y,h,kind='volume')=>parts.push({x,z,w,d,y,h,kind});
   const flip=seed%2?1:-1;
   if(family==='Crystal citadel'){
     add(0,0,3.6,3.4,0,height*.4);add(flip*.3,0,2.8,2.8,height*.4,height*.34);add(flip*.45,0,1.9,2.1,height*.74,height*.26);
   }else if(family==='Twin guild halls'){
-    add(-1.1,0,1.6,3,0,height);add(1.1,.35,1.6,2.5,0,height*.76);add(0,.35,.6,1.1,height*.47,.65);
+    add(-1.1,0,1.6,3,0,height);add(1.1,.35,1.6,2.5,0,height*.76);add(0,.35,.6,1.1,height*.47,.65,'bridge');
   }else if(family==='Mage archives'){
     if(seed%3===0){
       add(-1.15,0,1.7,3.5,0,height*.72);add(.9,-.35,2.2,2.8,0,height);
-      add(-.1,-.35,.45,1.4,height*.42,.8);
+      add(-.1,-.35,.45,1.4,height*.42,.8,'bridge');
     }else if(seed%3===1){
       add(0,0,3.8,3.5,0,height*.24);
       add(-flip*.5,0,2.7,2.7,height*.24,height*.28);
@@ -29,7 +29,7 @@ export function designBuilding(repo) {
   }else if(family==='Astral observatory'){
     add(0,0,4.4,3.9,0,height*.28);add(-flip*.65,-.25,2.6,3.1,height*.28,height*.42);add(-flip*.65,-.25,1.8,2,height*.7,height*.3);
   }else if(family==='Artisan quarters'){
-    add(-1.2,0,1.8,4,0,height*.72);add(1.05,-.7,2,2.6,0,height);add(.05,-1.25,.7,1.5,0,height*.38);
+    add(-1.2,0,1.8,4,0,height*.72);add(1.05,-.7,2,2.6,0,height);add(.05,-1.25,.7,1.5,0,height*.38,'connector');
   }else{
     add(0,0,4.1,3.7,0,height*.36);add(flip*.35,0,3.1,3,height*.36,height*.42);add(-flip*.1,0,2.6,2.4,height*.78,height*.22);
   }

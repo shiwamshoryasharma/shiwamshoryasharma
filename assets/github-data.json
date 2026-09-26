@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-25",
+  "updated": "2026-09-26",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
@@ -178,11 +178,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-09-26",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-09-27",
       "level": 0,
@@ -2000,8 +1995,13 @@
     },
     {
       "date": "2026-09-25",
-      "level": 3,
-      "count": 8
+      "level": 4,
+      "count": 13
+    },
+    {
+      "date": "2026-09-26",
+      "level": 0,
+      "count": 0
     }
   ],
   "language_mix": [

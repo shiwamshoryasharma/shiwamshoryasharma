@@ -6,10 +6,12 @@ import {
   SPAWN,
   TREE_SPOTS,
   floorHeight,
-  movePlayer,
   nearestProject,
   arrivalPoint,
 } from "./sky-state.js";
+import { createMotion, stepMotion } from "./sky-motion.js";
+import { createCharacterAnimator } from "./sky-character.js";
+import { addGardenDetails } from "./sky-details.js";
 
 /** Rendering owns GPU resources. Walking rules and exhibit content live in sky-state. */
 export async function createWorld(
@@ -81,20 +83,7 @@ export async function createWorld(
   scene.attach(robot);
   hero.scale.setScalar(1.18);
   robot.scale.setScalar(0.44);
-  const arms = ["J_Bip_L_UpperArm", "J_Bip_R_UpperArm"].map((n) =>
-    hero.getObjectByName(n),
-  );
-  const legNames = ["J_Bip_L_UpperLeg", "J_Bip_R_UpperLeg"].map((n) =>
-    hero.getObjectByName(n),
-  );
-  const knees = ["J_Bip_L_LowerLeg", "J_Bip_R_LowerLeg"].map((n) =>
-    hero.getObjectByName(n),
-  );
-  const kneeBase = knees.map((o) => o.rotation.clone());
-  const armBase = arms.map((o) => o.rotation.clone());
-  const legBase = legNames.map((o) => o.rotation.clone());
-  const head = hero.getObjectByName("J_Bip_C_Head");
-  const headBase = head.rotation.clone();
+  const character = createCharacterAnimator(hero);
   const blinking = [];
   hero.traverse((o) => {
     if (o.morphTargetDictionary?.Blink !== undefined) blinking.push(o);
@@ -126,8 +115,8 @@ export async function createWorld(
     fog: false,
     toneMapped: false,
     uniforms: {
-      top: { value: new T.Color("#629ed0") },
-      bottom: { value: new T.Color("#dbe8cf") },
+      top: { value: new T.Color("#77b8e5") },
+      bottom: { value: new T.Color("#e9f5f2") },
     },
     vertexShader:
       "varying vec3 vDirection;void main(){vDirection=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}",
@@ -213,8 +202,23 @@ export async function createWorld(
       "#include <begin_vertex>\n transformed.x += sin(uWind*1.1 + instanceMatrix[3].x*.4 + instanceMatrix[3].z*.3)*max(position.y,0.)*.24;",
     );
   };
-  const grassGeo = new T.ConeGeometry(0.1, 0.48, 3),
-    grass = new T.InstancedMesh(grassGeo, grassMaterial, 3800),
+  const grassGeo = new T.BufferGeometry();
+  grassGeo.setAttribute(
+    "position",
+    new T.Float32BufferAttribute(
+      [
+        -0.06, 0, 0, 0.06, 0, 0, 0.035, 0.25, 0.025, -0.06, 0, 0, 0.035, 0.25,
+        0.025, -0.045, 0.25, 0.025, -0.045, 0.25, 0.025, 0.035, 0.25, 0.025,
+        -0.025, 0.47, 0.08, 0, 0, -0.045, 0, 0, 0.045, 0.025, 0.2, 0.025, 0, 0,
+        -0.045, 0.025, 0.2, 0.025, 0.02, 0.2, -0.035, 0.02, 0.2, -0.035, 0.025,
+        0.2, 0.025, 0.075, 0.38, -0.01,
+      ],
+      3,
+    ),
+  );
+  grassGeo.computeVertexNormals();
+  grassMaterial.side = T.DoubleSide;
+  const grass = new T.InstancedMesh(grassGeo, grassMaterial, 3800),
     dummy = new T.Object3D();
   let gi = 0;
   while (gi < 3800) {
@@ -242,19 +246,61 @@ export async function createWorld(
     g.position.set(x, -0.25, z);
     g.scale.setScalar(s);
     trees.add(g);
-    const trunk = cyl(0.16, 0.26, 2.6, "#796e58", 0, 1.3, 0, g, 7);
-    trunk.rotation.z = 0.08;
-    for (let i = 0; i < 5; i++) {
-      const a = i * 2.4;
-      const leaf = mesh(
-        new T.SphereGeometry(1.25, 12, 8),
-        pink ? (i % 2 ? "#e29ebc" : "#f1bdd2") : i % 2 ? "#39836b" : "#6eac67",
-        Math.cos(a) * 0.85,
-        2.6 + Math.sin(i) * 0.48,
-        Math.sin(a) * 0.78,
+    const trunkPath = new T.CatmullRomCurve3([
+      new T.Vector3(0, 0, 0),
+      new T.Vector3(0.13, 0.9, -0.08),
+      new T.Vector3(-0.06, 1.8, 0.03),
+      new T.Vector3(0.18, 2.6, 0.06),
+    ]);
+    mesh(
+      new T.TubeGeometry(trunkPath, 10, 0.16, 7, false),
+      "#796e58",
+      0,
+      0,
+      0,
+      g,
+    );
+    for (let i = 0; i < 9; i++) {
+      const a = i * 2.4,
+        r = 0.8 + (i % 3) * 0.3,
+        y = 2.1 + (i % 4) * 0.32;
+      const bx = Math.cos(a) * r,
+        bz = Math.sin(a) * r;
+      const branch = new T.CatmullRomCurve3([
+        new T.Vector3(0.02, 1.15, 0),
+        new T.Vector3(bx * 0.55, y - 0.6, bz * 0.55),
+        new T.Vector3(bx, y, bz),
+      ]);
+      mesh(
+        new T.TubeGeometry(branch, 5, 0.055, 5, false),
+        "#796e58",
+        0,
+        0,
+        0,
         g,
       );
-      leaf.scale.set(1.25, 0.64, 1.1);
+      const leaf = mesh(
+        new T.IcosahedronGeometry(0.92, 2),
+        pink ? (i % 2 ? "#e29ebc" : "#f1bdd2") : i % 2 ? "#39836b" : "#6eac67",
+        bx,
+        y + 0.12,
+        bz,
+        g,
+      );
+      leaf.scale.set(1.1, 0.62, 1);
+      for (let j = 0; j < 4; j++) {
+        const angle = a + j * 1.57;
+        const tuft = mesh(
+          new T.IcosahedronGeometry(0.19, 1),
+          pink ? "#e8b4c8" : "#5c9966",
+          bx + Math.cos(angle) * 0.89,
+          y + 0.08 + Math.sin(j) * 0.25,
+          bz + Math.sin(angle) * 0.87,
+          g,
+        );
+        tuft.scale.set(1.6, 0.48, 1);
+        tuft.rotation.y = -angle;
+      }
     }
   }
   for (const t of TREE_SPOTS) tree(t.x, t.z, t.scale, t.pink);
@@ -361,6 +407,7 @@ export async function createWorld(
       spire.rotation.z = 0.12 * j;
     }
   }
+  const gardenDetails = addGardenDetails({ scene, mesh, box, cyl, mat, wind });
   // Batch the immutable landscape by material; preserve actors and animated exhibits.
   scene.updateMatrixWorld(true);
   const batches = new Map();
@@ -610,7 +657,7 @@ export async function createWorld(
   contact.rotation.x = -Math.PI / 2;
   contact.scale.y = 0.68;
   contact.castShadow = false;
-  let player = { ...SPAWN },
+  let player = createMotion(SPAWN),
     mode = "overview",
     yaw = 0.15,
     pitch = 0.27,
@@ -621,25 +668,30 @@ export async function createWorld(
   let frame = 0,
     last = 0,
     elapsed = 0,
-    walkTime = 0,
     near = null,
     drag = null,
     zoom = 8,
     frames = 0,
     statTime = 0,
-    jump = 0,
-    jumpVelocity = 0;
+    jumpQueued = false,
+    robotReady = false;
   const keys = new Set(),
     touch = { x: 0, z: 0 },
     target = new T.Vector3(),
     cameraGoal = new T.Vector3(),
-    look = new T.Vector3(0, 0, 0);
+    look = new T.Vector3(0, 0, 0),
+    robotGoal = new T.Vector3();
   const signal = new AbortController();
+  const cameraRay = new T.Raycaster(),
+    cameraDirection = new T.Vector3();
+  const cameraObstacles = [lab, ...exhibits];
   const events = { signal: signal.signal };
   const neutral = () => {
     keys.clear();
     touch.x = touch.z = 0;
     drag = null;
+    jumpQueued = false;
+    player.vx = player.vz = player.speed = 0;
   };
   function resize() {
     const w = host.clientWidth,
@@ -658,7 +710,9 @@ export async function createWorld(
     frame = 0;
     if (disposed || document.hidden) return;
     const dt = last ? Math.min((now - last) / 1000, 0.05) : 0.016;
-    if (last && now - last < 1000 / 30) {
+    // Controls render at display refresh rate; quiet scenery stays at 30 FPS.
+    const responsive = mode === "walk" && !blocked;
+    if (!responsive && last && now - last < 1000 / 30 - 1) {
       schedule();
       return;
     }
@@ -676,55 +730,46 @@ export async function createWorld(
         (keys.has("w") || keys.has("arrowup") ? 1 : 0) +
         touch.z,
       sprint: keys.has("shift"),
+      jump: jumpQueued,
     };
-    let walking = false;
     if (mode === "walk" && !blocked) {
-      const next = movePlayer(player, input, dt, yaw);
-      walking = Math.hypot(next.x - player.x, next.z - player.z) > 0.001;
-      if (walking) {
-        hero.rotation.y = Math.atan2(next.x - player.x, next.z - player.z);
-        player = next;
-        walkTime += dt * 9;
-      }
-      if (keys.has(" ") && jump === 0) {
-        jumpVelocity = 4;
-        keys.delete(" ");
-      }
-      jumpVelocity -= dt * 12;
-      jump = Math.max(0, jump + jumpVelocity * dt);
-      if (!jump) jumpVelocity = 0;
-    }
+      player = stepMotion(player, input, dt, yaw);
+    } else player = stepMotion(player, { x: 0, z: 0 }, dt, yaw);
+    jumpQueued = false;
+    const walking = player.speed > 0.01;
     const floor = floorHeight(player.x, player.z);
-    hero.position.set(player.x, floor + soleOffset + jump, player.z);
+    hero.rotation.y = player.heading;
+    hero.position.set(
+      player.x,
+      player.ground + soleOffset + player.jump,
+      player.z,
+    );
+    character.update(player, elapsed, floorHeight);
     contact.position.set(player.x, floor + 0.005, player.z);
-    contact.material.opacity = 0.18 / (1 + jump * 2);
+    contact.material.opacity = 0.18 / (1 + player.jump * 2);
     const blinkPhase = elapsed % 4.7;
     const blink =
       blinkPhase > 4.5 ? Math.sin(((blinkPhase - 4.5) / 0.2) * Math.PI) : 0;
     blinking.forEach(
       (o) => (o.morphTargetInfluences[o.morphTargetDictionary.Blink] = blink),
     );
-    arms.forEach((a, i) => {
-      a.rotation.copy(armBase[i]);
-      if (walking) a.rotation.x += Math.sin(walkTime + i * Math.PI) * 0.22;
-    });
-    legNames.forEach((a, i) => {
-      a.rotation.copy(legBase[i]);
-      if (walking) a.rotation.x += Math.sin(walkTime + i * Math.PI) * 0.28;
-    });
-    knees.forEach((a, i) => {
-      a.rotation.copy(kneeBase[i]);
-      if (walking)
-        a.rotation.x += Math.max(0, Math.sin(walkTime + i * Math.PI)) * 0.35;
-    });
-    head.rotation.copy(headBase);
-    if (ambient) head.rotation.y += Math.sin(elapsed * 0.7) * 0.055;
-    robot.position.set(
-      player.x + 1.05,
-      2.35 + Math.sin(elapsed * 2) * 0.12,
-      player.z - 0.35,
+    robotGoal.set(
+      player.x +
+        Math.cos(player.heading) * 1.05 -
+        Math.sin(player.heading) * 0.55,
+      player.ground + 2.45 + Math.sin(elapsed * 2) * 0.08,
+      player.z -
+        Math.sin(player.heading) * 1.05 -
+        Math.cos(player.heading) * 0.55,
     );
-    robot.rotation.y = hero.rotation.y - 0.2;
+    robot.position.lerp(robotGoal, robotReady ? 1 - Math.exp(-dt * 5) : 1);
+    robotReady = true;
+    robot.rotation.y +=
+      Math.atan2(
+        Math.sin(player.heading - 0.2 - robot.rotation.y),
+        Math.cos(player.heading - 0.2 - robot.rotation.y),
+      ) *
+      (1 - Math.exp(-dt * 6));
     const found =
       mode === "walk"
         ? Math.hypot(player.x - 6.55, player.z + 1.4) < 2.5
@@ -744,19 +789,44 @@ export async function createWorld(
         portrait ? 44 : 42,
       );
     } else {
-      target.set(player.x, 1.6 + jump * 0.3, player.z);
+      target.set(player.x, player.ground + 1.6 + player.jump * 0.2, player.z);
       const distance = portrait ? zoom * 1.3 : zoom;
       cameraGoal.set(
         player.x + Math.sin(yaw) * distance,
-        2 + Math.sin(pitch) * distance,
+        player.ground + 2 + Math.sin(pitch) * distance,
         player.z + Math.cos(yaw) * distance,
       );
+      cameraDirection.subVectors(cameraGoal, target);
+      cameraRay.far = cameraDirection.length();
+      cameraRay.set(target, cameraDirection.normalize());
+      const obstruction = cameraRay.intersectObjects(cameraObstacles, true)[0];
+      if (obstruction)
+        cameraGoal
+          .copy(target)
+          .addScaledVector(
+            cameraRay.ray.direction,
+            Math.max(0.5, obstruction.distance - 0.35),
+          );
     }
-    const k = paused() ? 1 : 1 - Math.exp(-dt * 4);
+    const k = 1 - Math.exp(-dt * (mode === "walk" ? 9 : 4));
     camera.position.lerp(cameraGoal, k);
     look.lerp(target, k);
+    if (mode === "walk") {
+      cameraDirection.subVectors(camera.position, target);
+      cameraRay.far = cameraDirection.length();
+      cameraRay.set(target, cameraDirection.normalize());
+      const obstruction = cameraRay.intersectObjects(cameraObstacles, true)[0];
+      if (obstruction)
+        camera.position
+          .copy(target)
+          .addScaledVector(
+            cameraRay.ray.direction,
+            Math.max(0.5, obstruction.distance - 0.35),
+          );
+    }
     camera.lookAt(look);
     if (ambient) {
+      gardenDetails.update(elapsed);
       animated.forEach((o, i) => {
         o.rotation.y += dt * (0.35 + i * 0.007);
       });
@@ -782,14 +852,25 @@ export async function createWorld(
     if (
       ambient ||
       walking ||
-      jump > 0 ||
+      player.jump > 0 ||
+      player.air > 0.01 ||
+      player.blend > 0.01 ||
+      player.landing > 0.01 ||
+      (mode === "walk" && !blocked && (keys.size > 0 || touch.x || touch.z)) ||
       camera.position.distanceTo(cameraGoal) > 0.02 ||
       look.distanceTo(target) > 0.02
     )
       schedule();
   }
   function keydown(e) {
-    if (document.activeElement !== host || blocked || mode !== "walk" || e.ctrlKey || e.metaKey || e.altKey)
+    if (
+      document.activeElement !== host ||
+      blocked ||
+      mode !== "walk" ||
+      e.ctrlKey ||
+      e.metaKey ||
+      e.altKey
+    )
       return;
     if (
       [
@@ -806,7 +887,9 @@ export async function createWorld(
       ].includes(e.key.toLowerCase())
     ) {
       e.preventDefault();
-      keys.add(e.key.toLowerCase());
+      if (e.key === " ") {
+        if (!e.repeat) jumpQueued = true;
+      } else keys.add(e.key.toLowerCase());
       schedule();
     }
   }
@@ -947,11 +1030,13 @@ export async function createWorld(
     travel(id) {
       const p = PROJECTS.find((p) => p.id === id);
       if (!p) return;
-      player = arrivalPoint(p);
       yaw = Math.atan2(-p.position[0], -p.position[2]);
-      hero.rotation.y = yaw + Math.PI;
+      neutral();
+      player = createMotion(arrivalPoint(p), yaw + Math.PI);
+      robotReady = false;
       mode = "walk";
-      jump = 0;
+      near = p;
+      onNear(p);
       host.focus({ preventScroll: true });
       schedule();
     },
@@ -962,8 +1047,9 @@ export async function createWorld(
     },
     setNight(value) {
       night = value;
-      skyMaterial.uniforms.top.value.set(night ? "#172d50" : "#629ed0");
-      skyMaterial.uniforms.bottom.value.set(night ? "#4f687a" : "#dbe8cf");
+      gardenDetails.setNight(night);
+      skyMaterial.uniforms.top.value.set(night ? "#172d50" : "#77b8e5");
+      skyMaterial.uniforms.bottom.value.set(night ? "#4f687a" : "#e9f5f2");
       scene.background.set(night ? "#233d59" : "#a7d2df");
       scene.fog.color.copy(scene.background);
       hemi.intensity = night ? 1.05 : 1.8;

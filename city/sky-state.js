@@ -82,6 +82,7 @@ export const PROJECTS = [
 ];
 export const SPAWN = { x: 0, z: 7 };
 export const WORLD_RADIUS = 28;
+export const GARDEN = { x: -14, z: 3, rx: 3.7, rz: 2.2 };
 export const TREE_SPOTS = Array.from({ length: 27 }, (_, i) => {
   const a = i * 2.399,
     r = 22 + ((i * 17) % 9);
@@ -110,6 +111,13 @@ const circles = [
 ];
 export function floorHeight(x, z) {
   if (
+    Math.abs(x - GARDEN.x) < GARDEN.rx + 0.25 &&
+    Math.abs(z - GARDEN.z) < 0.65
+  )
+    return (
+      -0.03 + 0.36 * Math.max(0, 1 - ((x - GARDEN.x) / (GARDEN.rx + 0.25)) ** 2)
+    );
+  if (
     Math.hypot(x, z) < 5.65 ||
     Math.hypot(x - 6.55, z + 1.4) < 1.82 ||
     Math.hypot(x + 7, z) < 1.68
@@ -129,6 +137,10 @@ export function walkable(x, z) {
     Number.isFinite(x) &&
     Number.isFinite(z) &&
     Math.hypot(x, z) < WORLD_RADIUS &&
+    !(
+      ((x - GARDEN.x) / GARDEN.rx) ** 2 + ((z - GARDEN.z) / GARDEN.rz) ** 2 <
+        1 && Math.abs(z - GARDEN.z) > 0.55
+    ) &&
     !(x > -4.45 && x < 1.1 && z > -3.4 && z < 0.55) &&
     !circles.some((c) => Math.hypot(x - c.x, z - c.z) < c.r + 0.25)
   );

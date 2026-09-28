@@ -8,6 +8,7 @@ import {
   nearestProject,
   arrivalPoint,
   floorHeight,
+  GARDEN,
 } from "../city/sky-state.js";
 test("spawn and all fast-travel arrivals are walkable and in interaction range", () => {
   assert.ok(walkable(SPAWN.x, SPAWN.z));
@@ -16,6 +17,13 @@ test("spawn and all fast-travel arrivals are walkable and in interaction range",
     assert.ok(walkable(p.x, p.z));
     assert.equal(nearestProject(p)?.id, project.id);
   }
+});
+
+test("water garden blocks the pond but its bridge is walkable and follows the arch", () => {
+  assert.equal(walkable(GARDEN.x, GARDEN.z + 1), false);
+  assert.equal(walkable(GARDEN.x, GARDEN.z), true);
+  assert.ok(floorHeight(GARDEN.x, GARDEN.z) > 0.3);
+  assert.ok(floorHeight(GARDEN.x + GARDEN.rx, GARDEN.z) < 0.03);
 });
 test("movement normalizes diagonals and caps long frame gaps", () => {
   const a = movePlayer(SPAWN, { x: 1, z: 0 }, 0.02),

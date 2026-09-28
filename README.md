@@ -6,7 +6,7 @@
 
 ### Robotics · AI · Full-stack engineering
 
-**[Enter my portfolio & fantasy realm ↗](https://shiwamshoryasharma.github.io/shiwamshoryasharma/)**
+**[Explore Skybound — my anime-tech portfolio ↗](https://shiwamshoryasharma.github.io/shiwamshoryasharma/)**
 
 I build software that connects what machines **see**, how they **move**, and how people **work with them**.
 
@@ -90,7 +90,7 @@ Also exploring perception with [Object Depth Analyzer](https://github.com/shiwam
 </a>
 
 <p align="center">
-<a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/"><strong>Explore the portfolio & fantasy realm ↗</strong></a><br />
+<a href="https://shiwamshoryasharma.github.io/shiwamshoryasharma/"><strong>Explore Skybound & the repository realm ↗</strong></a><br />
 <sub>A 64-block town · Horse carts · Passing dragons · An isekai secret</sub>
 </p>
 

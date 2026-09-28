@@ -1,26 +1,24 @@
-# Wayfarer & Pixel
+# Skybound art sources
 
-An original hooded, androgynous anime-inspired explorer and floating reconnaissance robot, authored in Blender 5.1.2. No personal photograph was used for the model.
+`anime-explorer.blend` is the detailed, skinned portfolio explorer, customized in Blender 5.2.2 LTS from the CC0 **Sakurada Fumiriya** model by VRoid Project / pixiv Inc. See `../ASSETS.md` for publisher license, source mirror and SHA-256. Face, hair, body, clothing textures and rig are adapted from that base. The expedition mantle, collar, harness, brooch and Pixel robot are custom additions.
 
-- `wayfarer.blend`: editable source scene, studio lights and fallback camera.
-- `../scripts/build_explorer.py`: reproducible Blender geometry authoring script.
-- `../assets/wayfarer.glb`: optimized glTF 2.0 runtime asset, about 1.2 MB.
-- `../assets/wayfarer-poster.webp`: transparent fallback for loading, disabled JavaScript, and unavailable WebGL.
+`sky-district.blend` contains the original research pavilion, platforms and a studio fallback render with the credited explorer. The surrounding explorable landscape is authored in `../city/sky-world.js`.
 
-The model has separate transform pivots for the head, eyelids, left/right arms and robot. Browser code supplies breathing, blinking, a wave and robot hover. It is not a skinned humanoid rig or a motion-capture asset. Geometry is grouped by material within pivots to limit draw calls. No external textures, Draco decoder, paid service or downloaded character model is needed.
+The earlier `wayfarer.blend` is retained as the source of the original robot companion. Its simplified human is not used on the new homepage.
 
-## Rebuild
+## Rebuild the detailed explorer
 
-From the repository root in PowerShell:
+From the repository root, download and extract the documented source:
 
 ```powershell
-& 'C:\Program Files\Blender Foundation\Blender 5.1\blender.exe' --background --python scripts/build_explorer.py
-npx --yes @gltf-transform/cli@4.2.1 dedup assets/wayfarer.glb assets/wayfarer-optimized.glb
-Copy-Item assets/wayfarer-optimized.glb assets/wayfarer.glb -Force
-python scripts/prepare_portfolio_assets.py --poster-only
-python scripts/build_city.py
+New-Item -ItemType Directory -Force .tmp/character-source | Out-Null
+Invoke-WebRequest 'https://opengameart.org/sites/default/files/sakurada_fumiriya.zip' -OutFile .tmp/character-source/sakurada_fumiriya.zip
+Expand-Archive .tmp/character-source/sakurada_fumiriya.zip .tmp/character-source/sakurada -Force
+python scripts/prepare_anime_source.py
+& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python scripts/prepare_anime_explorer.py
+& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python scripts/build_sky_district.py
 ```
 
-The optional image encoding step requires Pillow. Blender and glTF Transform are authoring tools only; the GitHub Pages workflow deploys committed runtime assets without installing either.
+The source-preparation script verifies the VRM checksum, converts standard materials and removes VRM-specific vertex masks that would otherwise hide the body in glTF. Blender preserves skin weights and facial morphs; the `Blink` morph and named humanoid bones are used by the browser. The camera/poster uses the actual asset, not a generated concept image.
 
-The character is intentionally decorative and has no collision mesh. It uses dynamic browser lighting and one level of detail. The viewer caps pixel density at 1.5 and animation at 30 FPS, stops scheduling frames off-screen/in hidden tabs, and honors reduced-motion preferences. The rendered poster keeps the design usable when 3D fails.
+Encode the generated PNG fallback posters as WebP with Pillow before running `python scripts/build_city.py`. All runtime assets are committed: Pages needs neither Blender nor an external model service. No Draco/Meshopt decoder is required.

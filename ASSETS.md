@@ -48,3 +48,14 @@ Horse anatomy, articulated legs, cart wheels, reins, town walls, armored entranc
 - `city/vendor/loaders/GLTFLoader.js` and `city/vendor/utils/{BufferGeometryUtils,SkeletonUtils}.js`: unmodified Three.js r186 MIT release source, matching the existing runtime. License: `city/vendor/THREE-LICENSE.txt`.
 
 The former personal portrait is removed and excluded from the publishing allowlist. Neither its visible personal information nor an old staging copy may be republished. Old Git revisions are outside the static build's scope.
+
+## Skybound explorable portfolio (September 2026)
+
+- `assets/anime-explorer.glb` and `art/anime-explorer.blend`: adapted from **Sakurada Fumiriya** by VRoid Project / pixiv Inc. The original publisher explicitly released this older sample under CC0: https://vroid.pixiv.help/hc/en-us/articles/360014788554-Sakurada-Fumiriya . This does not claim that all current VRoid presets are CC0.
+- Source mirror: https://opengameart.org/content/vroid-studio-cc0-models ; downloadable archive https://opengameart.org/sites/default/files/sakurada_fumiriya.zip . Original `Sakurada Fumiriya.vrm` SHA-256: `a36e91b81518c59f6da0e3f34a176b79090a8c68cc6bd5fe03c1560744b283f3`.
+- Changes: standard glTF material conversion (VRM vertex masks removed), silver-blue material tints, resized embedded textures, posed shoulders, a Blender-authored jade mantle/collar/harness/brooch, and the original Pixel companion. Humanoid skin weights and painted face/hair/clothing textures remain from the credited base. This is a fictional explorer, not a likeness of the portfolio owner.
+- `assets/sky-district.glb`, its fallback poster and `art/sky-district.blend`: original Blender-authored research pavilion and satellite platforms. The editable scene includes the credited explorer. Runtime landscape, flora, ruins and exhibits are original Three.js geometry.
+- `factory-dashboard.webp` and `factory-isaac.webp`: owner-approved screenshots of Autonomous Factory, supplied September 28, 2026. The source repository remains private; only these approved pictures are published.
+- `robot-controls.webp`, `conveyor-simulation.webp`, `virtual-lab.webp`: three additional owner-approved screenshots of simulation and 3D-interface work. Resized derivatives strip source metadata; source files are untouched.
+- `city/soundscape.js`: original score “Above the Workbench” and interaction sound design, synthesized with oscillators. No samples, third-party musical works, game audio or external audio services. Audio is opt-in and pauses in hidden tabs.
+- User-facing attribution is available at `city/credits.html`.

@@ -7,3 +7,8 @@ __pycache__/
 *.blend1
 assets/wayfarer-poster.png
 assets/wayfarer-optimized.glb
+
+.tmp/
+assets/anime-explorer-poster.png
+assets/sky-district-poster.png
+assets/sky-district-optimized.glb

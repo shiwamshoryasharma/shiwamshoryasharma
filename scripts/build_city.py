@@ -6,7 +6,9 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 DESTINATION = ROOT / '.preview' / 'site'
 PUBLIC_ASSETS = ('anime-robotics-lab.png', 'workshop.webp', 'fantasy-workshop.webp',
-                 'wayfarer.glb', 'wayfarer-poster.webp')
+                 'anime-explorer.glb', 'anime-explorer-poster.webp', 'sky-district.glb', 'sky-district-poster.webp',
+                 'factory-isaac.webp', 'factory-dashboard.webp', 'robot-controls.webp',
+                 'conveyor-simulation.webp', 'virtual-lab.webp')
 
 
 def main():

@@ -17,7 +17,7 @@ class PublicBuild(unittest.TestCase):
             (root / 'assets').mkdir()
             (root / 'city/index.html').write_text('<script src="app.js"></script>')
             (root / 'city/app.js').write_text('export const ready = true;')
-            for name in ['github-data.json', 'anime-robotics-lab.png', 'workshop.webp', 'fantasy-workshop.webp', 'wayfarer.glb', 'wayfarer-poster.webp']:
+            for name in (*build.PUBLIC_ASSETS, 'github-data.json'):
                 (root / 'assets' / name).write_text('{}')
             (root / 'assets/profile.png').write_bytes(b'private original')
             site = root / '.preview/site'
@@ -28,7 +28,7 @@ class PublicBuild(unittest.TestCase):
                 build.main()
             self.assertFalse((site / 'assets/profile.png').exists())
             self.assertFalse((site / 'old-page.html').exists())
-            self.assertTrue((site / 'assets/wayfarer.glb').exists())
+            self.assertTrue((site / 'assets/anime-explorer.glb').exists())
             self.assertTrue((site / 'assets/workshop.webp').exists())
             self.assertIn('?v=', (site / 'index.html').read_text())
             self.assertEqual((root / 'assets/profile.png').read_bytes(), b'private original')

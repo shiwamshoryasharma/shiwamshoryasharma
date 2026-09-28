@@ -126,3 +126,13 @@ The dragon has a curved neck, tapered animated tail, sculpted head and jaw, horn
 See [art/README.md](art/README.md) for authoring and optimization commands. Commit the `.blend` source, optimized GLB and WebP fallback. The page reuses `SGT29ajkskd.png` as `workshop.webp` and `suawuaiduw.png` as `fantasy-workshop.webp`; source pictures remain local. `scripts/prepare_portfolio_assets.py` performs resizing/encoding without carrying EXIF metadata.
 
 Run `python -m unittest discover -s tests -p "test_*.py"` for source-count and public-build privacy tests. `node --test tests/*.test.mjs` also checks the shipped character budget and required animation pivots. On sandboxed Windows hosts that deny child-process creation, use `node --test --experimental-test-isolation=none tests/*.test.mjs`.
+
+## Skybound runtime
+
+The homepage is now `city/index.html` with `sky-app.js`, `sky-world.js`, `sky-state.js`, `sky.css`, and `soundscape.js`. The existing repository town remains at `realm.html`; `profile.html` provides a readable no-WebGL/no-JavaScript portfolio with all approved company screenshots. `credits.html` documents the anime base and original synthesized music.
+
+Movement/collision/surface-height rules are pure functions in `sky-state.js`. The renderer caps device pixel ratio at 1.5 and animation at 30 FPS, batches immutable scenery, instances vegetation, stops in hidden tabs, disposes GPU resources, and honors ambient pause/reduced motion. Walking and camera controls remain usable with ambient motion paused. GLB assets are served locally with the build revision. Audio never autoplays; it initializes after user interaction, limits gain, throttles UI sounds, and suspends in hidden tabs.
+
+The explorable area is one bounded research island. Distant islands and ruins outside the boundary are scenery, not additional playable regions. It is not a full commercial open-world game.
+
+Keep `scripts/build_city.py`'s explicit public asset allowlist. Do not stage original screenshots, authoring downloads, `.blend` files, or the entire assets directory. The detailed character budget is 9 MB with embedded textures and skin weights; its contract test checks those properties and the runtime bone names.

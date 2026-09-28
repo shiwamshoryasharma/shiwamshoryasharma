@@ -11,7 +11,7 @@ on:
       - 'assets/github-data.json'
       - 'assets/anime-robotics-lab.png'
       - 'assets/*.webp'
-      - 'assets/wayfarer.glb'
+      - 'assets/*.glb'
       - '.github/workflows/city-pages.yml'
   workflow_run:
     workflows: ['Refresh profile cards']

@@ -10,7 +10,8 @@ on:
       - 'tests/*.py'
       - 'assets/github-data.json'
       - 'assets/anime-robotics-lab.png'
-      - 'assets/profile.png'
+      - 'assets/*.webp'
+      - 'assets/wayfarer.glb'
       - '.github/workflows/city-pages.yml'
   workflow_run:
     workflows: ['Refresh profile cards']

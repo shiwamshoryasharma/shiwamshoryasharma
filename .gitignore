@@ -4,3 +4,6 @@ __pycache__/
 .env
 .env.*
 !.env.example
+*.blend1
+assets/wayfarer-poster.png
+assets/wayfarer-optimized.glb

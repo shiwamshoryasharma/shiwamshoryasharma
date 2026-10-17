@@ -1,7 +1,35 @@
 {
-  "updated": "2026-10-16",
+  "updated": "2026-10-17",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
+    {
+      "name": "Image-3D-object",
+      "url": "https://github.com/shiwamshoryasharma/Image-3D-object",
+      "languages": {
+        "Python": 3538045,
+        "TypeScript": 786662,
+        "JavaScript": 618552,
+        "CSS": 122046,
+        "Batchfile": 16246,
+        "PowerShell": 3530,
+        "Shell": 710,
+        "HTML": 613,
+        "Cuda": 466
+      },
+      "colors": {
+        "Python": "#3572A5",
+        "TypeScript": "#3178c6",
+        "JavaScript": "#f1e05a",
+        "CSS": "#663399",
+        "Batchfile": "#C1F12E",
+        "PowerShell": "#012456",
+        "Shell": "#89e051",
+        "HTML": "#e34c26",
+        "Cuda": "#3A4E3A"
+      },
+      "bytes": 5086870,
+      "source_files": 657
+    },
     {
       "name": "OIBSIP",
       "url": "https://github.com/shiwamshoryasharma/OIBSIP",
@@ -15,34 +43,6 @@
       },
       "bytes": 3502771,
       "source_files": 4
-    },
-    {
-      "name": "Image-3D-object",
-      "url": "https://github.com/shiwamshoryasharma/Image-3D-object",
-      "languages": {
-        "Python": 2136180,
-        "TypeScript": 394812,
-        "CSS": 96514,
-        "JavaScript": 92561,
-        "Batchfile": 16246,
-        "PowerShell": 3530,
-        "Shell": 710,
-        "HTML": 613,
-        "Cuda": 466
-      },
-      "colors": {
-        "Python": "#3572A5",
-        "TypeScript": "#3178c6",
-        "CSS": "#663399",
-        "JavaScript": "#f1e05a",
-        "Batchfile": "#C1F12E",
-        "PowerShell": "#012456",
-        "Shell": "#89e051",
-        "HTML": "#e34c26",
-        "Cuda": "#3A4E3A"
-      },
-      "bytes": 2741632,
-      "source_files": 423
     },
     {
       "name": "ML_NLP_RestaurantReview_Python",
@@ -206,11 +206,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-10-17",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-10-18",
       "level": 0,
@@ -2029,44 +2024,49 @@
     {
       "date": "2026-10-16",
       "level": 2,
-      "count": 4
+      "count": 6
+    },
+    {
+      "date": "2026-10-17",
+      "level": 0,
+      "count": 0
     }
   ],
   "language_mix": [
     {
       "language": "Jupyter Notebook",
       "bytes": 4750551,
-      "percent": 43.3
+      "percent": 35.7
     },
     {
       "language": "Python",
-      "bytes": 2648491,
-      "percent": 24.1
+      "bytes": 4050356,
+      "percent": 30.4
     },
     {
       "language": "TypeScript",
-      "bytes": 2007502,
-      "percent": 18.3
+      "bytes": 2399352,
+      "percent": 18.0
     },
     {
       "language": "HTML",
       "bytes": 924805,
-      "percent": 8.4
-    },
-    {
-      "language": "CSS",
-      "bytes": 313740,
-      "percent": 2.9
+      "percent": 6.9
     },
     {
       "language": "JavaScript",
-      "bytes": 310714,
-      "percent": 2.8
+      "bytes": 836705,
+      "percent": 6.3
+    },
+    {
+      "language": "CSS",
+      "bytes": 339272,
+      "percent": 2.6
     },
     {
       "language": "Batchfile",
       "bytes": 17802,
-      "percent": 0.2
+      "percent": 0.1
     },
     {
       "language": "Other",

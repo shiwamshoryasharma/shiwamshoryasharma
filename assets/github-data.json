@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22",
+  "updated": "2026-10-23",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
@@ -73,6 +73,28 @@
       },
       "bytes": 1040625,
       "source_files": 16
+    },
+    {
+      "name": "AniVerse",
+      "url": "https://github.com/shiwamshoryasharma/AniVerse",
+      "languages": {
+        "TypeScript": 664594,
+        "JavaScript": 80108,
+        "CSS": 71747,
+        "NSIS": 19191,
+        "PowerShell": 15311,
+        "HTML": 410
+      },
+      "colors": {
+        "TypeScript": "#3178c6",
+        "JavaScript": "#f1e05a",
+        "CSS": "#663399",
+        "NSIS": null,
+        "PowerShell": "#012456",
+        "HTML": "#e34c26"
+      },
+      "bytes": 851361,
+      "source_files": 117
     },
     {
       "name": "AnishapeGeometry",
@@ -206,11 +228,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-10-23",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-10-24",
       "level": 0,
@@ -2029,49 +2046,54 @@
     {
       "date": "2026-10-22",
       "level": 1,
-      "count": 1
+      "count": 3
+    },
+    {
+      "date": "2026-10-23",
+      "level": 1,
+      "count": 2
     }
   ],
   "language_mix": [
     {
       "language": "Jupyter Notebook",
       "bytes": 4750551,
-      "percent": 33.2
+      "percent": 31.4
     },
     {
       "language": "Python",
       "bytes": 4541134,
-      "percent": 31.8
+      "percent": 30.0
     },
     {
       "language": "TypeScript",
-      "bytes": 2795365,
-      "percent": 19.6
-    },
-    {
-      "language": "HTML",
-      "bytes": 924805,
-      "percent": 6.5
+      "bytes": 3459959,
+      "percent": 22.8
     },
     {
       "language": "JavaScript",
-      "bytes": 848225,
-      "percent": 5.9
+      "bytes": 928333,
+      "percent": 6.1
+    },
+    {
+      "language": "HTML",
+      "bytes": 925215,
+      "percent": 6.1
     },
     {
       "language": "CSS",
-      "bytes": 411173,
-      "percent": 2.9
+      "bytes": 482920,
+      "percent": 3.2
     },
     {
-      "language": "Batchfile",
-      "bytes": 17802,
+      "language": "NSIS",
+      "bytes": 19191,
       "percent": 0.1
     },
     {
       "language": "Other",
-      "bytes": 5057,
-      "percent": 0.0
+      "bytes": 38170,
+      "percent": 0.3
     }
   ]
 }

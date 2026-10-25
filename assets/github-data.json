@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24",
+  "updated": "2026-10-25",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
@@ -228,11 +228,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-10-25",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-10-26",
       "level": 0,
@@ -2050,6 +2045,11 @@
     },
     {
       "date": "2026-10-24",
+      "level": 0,
+      "count": 0
+    },
+    {
+      "date": "2026-10-25",
       "level": 0,
       "count": 0
     }

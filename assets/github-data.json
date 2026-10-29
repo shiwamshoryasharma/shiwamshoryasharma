@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-28",
+  "updated": "2026-10-29",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
@@ -45,6 +45,30 @@
       "source_files": 4
     },
     {
+      "name": "AniVerse",
+      "url": "https://github.com/shiwamshoryasharma/AniVerse",
+      "languages": {
+        "TypeScript": 884935,
+        "GLSL": 162752,
+        "JavaScript": 137531,
+        "CSS": 91348,
+        "NSIS": 19191,
+        "PowerShell": 15311,
+        "HTML": 410
+      },
+      "colors": {
+        "TypeScript": "#3178c6",
+        "GLSL": "#5686a5",
+        "JavaScript": "#f1e05a",
+        "CSS": "#663399",
+        "NSIS": null,
+        "PowerShell": "#012456",
+        "HTML": "#e34c26"
+      },
+      "bytes": 1311478,
+      "source_files": 168
+    },
+    {
       "name": "ML_NLP_RestaurantReview_Python",
       "url": "https://github.com/shiwamshoryasharma/ML_NLP_RestaurantReview_Python",
       "languages": {
@@ -73,28 +97,6 @@
       },
       "bytes": 1040625,
       "source_files": 16
-    },
-    {
-      "name": "AniVerse",
-      "url": "https://github.com/shiwamshoryasharma/AniVerse",
-      "languages": {
-        "TypeScript": 795818,
-        "JavaScript": 114702,
-        "CSS": 85338,
-        "NSIS": 19191,
-        "PowerShell": 15311,
-        "HTML": 410
-      },
-      "colors": {
-        "TypeScript": "#3178c6",
-        "JavaScript": "#f1e05a",
-        "CSS": "#663399",
-        "NSIS": null,
-        "PowerShell": "#012456",
-        "HTML": "#e34c26"
-      },
-      "bytes": 1030770,
-      "source_files": 145
     },
     {
       "name": "AnishapeGeometry",
@@ -228,11 +230,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-10-29",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-10-30",
       "level": 0,
@@ -2052,48 +2049,53 @@
       "date": "2026-10-28",
       "level": 0,
       "count": 0
+    },
+    {
+      "date": "2026-10-29",
+      "level": 1,
+      "count": 1
     }
   ],
   "language_mix": [
     {
       "language": "Jupyter Notebook",
       "bytes": 4750551,
-      "percent": 31.0
+      "percent": 30.4
     },
     {
       "language": "Python",
       "bytes": 4541134,
-      "percent": 29.6
+      "percent": 29.1
     },
     {
       "language": "TypeScript",
-      "bytes": 3591183,
-      "percent": 23.4
+      "bytes": 3680300,
+      "percent": 23.6
     },
     {
       "language": "JavaScript",
-      "bytes": 962927,
+      "bytes": 985756,
       "percent": 6.3
     },
     {
       "language": "HTML",
       "bytes": 925215,
-      "percent": 6.0
+      "percent": 5.9
     },
     {
       "language": "CSS",
-      "bytes": 496511,
-      "percent": 3.3
+      "bytes": 502521,
+      "percent": 3.2
     },
     {
-      "language": "NSIS",
-      "bytes": 19191,
-      "percent": 0.1
+      "language": "GLSL",
+      "bytes": 162752,
+      "percent": 1.1
     },
     {
       "language": "Other",
-      "bytes": 38170,
-      "percent": 0.3
+      "bytes": 57361,
+      "percent": 0.4
     }
   ]
 }

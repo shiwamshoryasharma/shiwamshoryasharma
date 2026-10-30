@@ -1,14 +1,14 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
       "name": "Image-3D-object",
       "url": "https://github.com/shiwamshoryasharma/Image-3D-object",
       "languages": {
-        "Python": 4028823,
-        "TypeScript": 1182675,
-        "JavaScript": 630072,
+        "Python": 4219884,
+        "TypeScript": 1184829,
+        "JavaScript": 640353,
         "CSS": 193947,
         "Batchfile": 16246,
         "PowerShell": 3530,
@@ -27,8 +27,8 @@
         "HTML": "#e34c26",
         "Cuda": "#3A4E3A"
       },
-      "bytes": 6057082,
-      "source_files": 799
+      "bytes": 6260578,
+      "source_files": 824
     },
     {
       "name": "OIBSIP",
@@ -48,25 +48,25 @@
       "name": "AniVerse",
       "url": "https://github.com/shiwamshoryasharma/AniVerse",
       "languages": {
-        "TypeScript": 884935,
+        "TypeScript": 1056921,
+        "JavaScript": 214666,
         "GLSL": 162752,
-        "JavaScript": 137531,
-        "CSS": 91348,
+        "CSS": 109904,
         "NSIS": 19191,
         "PowerShell": 15311,
         "HTML": 410
       },
       "colors": {
         "TypeScript": "#3178c6",
-        "GLSL": "#5686a5",
         "JavaScript": "#f1e05a",
+        "GLSL": "#5686a5",
         "CSS": "#663399",
         "NSIS": null,
         "PowerShell": "#012456",
         "HTML": "#e34c26"
       },
-      "bytes": 1311478,
-      "source_files": 168
+      "bytes": 1579155,
+      "source_files": 225
     },
     {
       "name": "ML_NLP_RestaurantReview_Python",
@@ -230,11 +230,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-10-30",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-10-31",
       "level": 0,
@@ -2052,45 +2047,50 @@
     },
     {
       "date": "2026-10-29",
+      "level": 2,
+      "count": 5
+    },
+    {
+      "date": "2026-10-30",
       "level": 1,
-      "count": 1
+      "count": 2
     }
   ],
   "language_mix": [
     {
       "language": "Jupyter Notebook",
       "bytes": 4750551,
-      "percent": 30.4
+      "percent": 29.5
     },
     {
       "language": "Python",
-      "bytes": 4541134,
-      "percent": 29.1
+      "bytes": 4732195,
+      "percent": 29.4
     },
     {
       "language": "TypeScript",
-      "bytes": 3680300,
-      "percent": 23.6
+      "bytes": 3854440,
+      "percent": 24.0
     },
     {
       "language": "JavaScript",
-      "bytes": 985756,
-      "percent": 6.3
+      "bytes": 1073172,
+      "percent": 6.7
     },
     {
       "language": "HTML",
       "bytes": 925215,
-      "percent": 5.9
+      "percent": 5.8
     },
     {
       "language": "CSS",
-      "bytes": 502521,
+      "bytes": 521077,
       "percent": 3.2
     },
     {
       "language": "GLSL",
       "bytes": 162752,
-      "percent": 1.1
+      "percent": 1.0
     },
     {
       "language": "Other",

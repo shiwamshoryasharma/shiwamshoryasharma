@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05",
+  "updated": "2026-11-06",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
@@ -48,29 +48,31 @@
       "name": "AniVerse",
       "url": "https://github.com/shiwamshoryasharma/AniVerse",
       "languages": {
-        "TypeScript": 1294079,
-        "JavaScript": 465409,
-        "Kotlin": 167170,
+        "TypeScript": 1315056,
+        "JavaScript": 588506,
+        "Kotlin": 280833,
+        "CSS": 185838,
         "GLSL": 162752,
-        "CSS": 160392,
         "NSIS": 19191,
         "PowerShell": 15311,
         "Rust": 4415,
-        "HTML": 782
+        "HTML": 782,
+        "Python": 492
       },
       "colors": {
         "TypeScript": "#3178c6",
         "JavaScript": "#f1e05a",
         "Kotlin": "#A97BFF",
-        "GLSL": "#5686a5",
         "CSS": "#663399",
+        "GLSL": "#5686a5",
         "NSIS": null,
         "PowerShell": "#012456",
         "Rust": "#dea584",
-        "HTML": "#e34c26"
+        "HTML": "#e34c26",
+        "Python": "#3572A5"
       },
-      "bytes": 2289501,
-      "source_files": 332
+      "bytes": 2573176,
+      "source_files": 365
     },
     {
       "name": "ML_NLP_RestaurantReview_Python",
@@ -234,11 +236,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-11-06",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-11-07",
       "level": 0,
@@ -2057,44 +2054,49 @@
     {
       "date": "2026-11-05",
       "level": 1,
-      "count": 1
+      "count": 3
+    },
+    {
+      "date": "2026-11-06",
+      "level": 0,
+      "count": 0
     }
   ],
   "language_mix": [
     {
       "language": "Jupyter Notebook",
       "bytes": 4750551,
-      "percent": 28.3
+      "percent": 27.8
     },
     {
       "language": "Python",
-      "bytes": 4732195,
-      "percent": 28.2
+      "bytes": 4732687,
+      "percent": 27.7
     },
     {
       "language": "TypeScript",
-      "bytes": 4091598,
-      "percent": 24.4
+      "bytes": 4112575,
+      "percent": 24.1
     },
     {
       "language": "JavaScript",
-      "bytes": 1323915,
-      "percent": 7.9
+      "bytes": 1447012,
+      "percent": 8.5
     },
     {
       "language": "HTML",
       "bytes": 925587,
-      "percent": 5.5
+      "percent": 5.4
     },
     {
       "language": "CSS",
-      "bytes": 571565,
-      "percent": 3.4
+      "bytes": 597011,
+      "percent": 3.5
     },
     {
       "language": "Kotlin",
-      "bytes": 167170,
-      "percent": 1.0
+      "bytes": 280833,
+      "percent": 1.7
     },
     {
       "language": "Other",

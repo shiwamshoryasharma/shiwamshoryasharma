@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-19",
+  "updated": "2026-11-20",
   "scope": "public originals; excludes forks, profile and resume repositories",
   "repositories": [
     {
@@ -48,8 +48,8 @@
       "name": "AniVerse",
       "url": "https://github.com/shiwamshoryasharma/AniVerse",
       "languages": {
-        "TypeScript": 1342796,
-        "JavaScript": 593550,
+        "TypeScript": 1372925,
+        "JavaScript": 596862,
         "Kotlin": 280833,
         "CSS": 187381,
         "GLSL": 162752,
@@ -71,8 +71,8 @@
         "HTML": "#e34c26",
         "Python": "#3572A5"
       },
-      "bytes": 2608583,
-      "source_files": 371
+      "bytes": 2642024,
+      "source_files": 378
     },
     {
       "name": "ML_NLP_RestaurantReview_Python",
@@ -236,11 +236,6 @@
     }
   ],
   "days": [
-    {
-      "date": "2025-11-20",
-      "level": 0,
-      "count": 0
-    },
     {
       "date": "2025-11-21",
       "level": 0,
@@ -2060,27 +2055,32 @@
       "date": "2026-11-19",
       "level": 0,
       "count": 0
+    },
+    {
+      "date": "2026-11-20",
+      "level": 1,
+      "count": 1
     }
   ],
   "language_mix": [
     {
       "language": "Jupyter Notebook",
       "bytes": 4750551,
-      "percent": 27.8
+      "percent": 27.7
     },
     {
       "language": "Python",
       "bytes": 4732687,
-      "percent": 27.7
+      "percent": 27.6
     },
     {
       "language": "TypeScript",
-      "bytes": 4140315,
-      "percent": 24.2
+      "bytes": 4170444,
+      "percent": 24.3
     },
     {
       "language": "JavaScript",
-      "bytes": 1452056,
+      "bytes": 1455368,
       "percent": 8.5
     },
     {
@@ -2096,7 +2096,7 @@
     {
       "language": "Kotlin",
       "bytes": 280833,
-      "percent": 1.6
+      "percent": 1.7
     },
     {
       "language": "Other",
